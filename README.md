@@ -17,3 +17,9 @@ mat_a3x4.example e mat_b4x3.example: matrizes exemplos A (3x4) e B(4x3);
 
 # Executar: 
  ./mainEx01 mat_b3x4.tst mat_a3x4.tst
+
+# Métodos implementados e não tratados na execução do programa mainEx01.c
+Estes métodos estão implementados porém não são utilizados na implementação original do programa mainEx01.c
+* mgerar
+* mzerar
+* mimprimir
