@@ -89,7 +89,7 @@ int mgerar(mymatriz *matriz, int valor){
 	printf("# Gerando nova Matriz:\n");
 	for (int i=0; i < lin; i++){		
 		for (int j=0; j < col; j++){
-			matriz->matriz[i][j] = matriz->matriz[i][j] + valor;
+			matriz->matriz[i][j] = valor;
 		}
 	}
 
