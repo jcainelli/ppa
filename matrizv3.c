@@ -7,16 +7,16 @@
 
 int malocar (mymatriz *pMatriz){
 
- pMatriz->matriz = malloc(pMatriz->lin*sizeof(int*));
+	pMatriz->matriz = malloc(pMatriz->lin*sizeof(int*));
 
-  for(int i = 0; i < pMatriz->lin; i++){
-    pMatriz->matriz[i] = malloc(pMatriz->col*sizeof(int));
-	for (int j =0; j < pMatriz->col; j++){
-		pMatriz->matriz[i][j] = 0;
+	for(int i = 0; i < pMatriz->lin; i++){
+		pMatriz->matriz[i] = malloc(pMatriz->col*sizeof(int));
+		for (int j =0; j < pMatriz->col; j++){
+			pMatriz->matriz[i][j] = 0;
+		}
 	}
-  }
 
-  return 0;
+	return 0;
 }
 
 
@@ -83,5 +83,15 @@ int mzerar (mymatriz *matriz){
 }
 
 int mgerar(mymatriz *matriz, int valor){	
+	int lin = (matriz)->lin;
+	int col = (matriz)->col;		
+	
+	printf("# Gerando nova Matriz:\n");
+	for (int i=0; i < lin; i++){		
+		for (int j=0; j < col; j++){
+			matriz->matriz[i][j] = matriz->matriz[i][j] + valor;
+		}
+	}
+
 	return 0;
 }
