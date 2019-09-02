@@ -1,0 +1,29 @@
+Atividade 1  - PPA
+Aluno: Franco Gomes dos Santos
+Lingugem: C
+
+Executáveis: Exmain01 e gmat
+
+ARQUIVOS:
+gera_matriz:
+mainEx01.c
+MakeFile
+matrizv3.h
+matrizv3.c
+toolsv3.c
+toolsv3.h
+
+Passo a Passo
+1-Compile o gmat - Para conseguir criar as matrizes e alocação na memória
+"make gmat"
+
+2-Compile o mainEx01 - Para comparar as matrizes
+"make mainEx01"
+
+3- Execute o gmat e dimensione a matrix, com qnt linha e coluna. Repita para criar dois arquivos
+"./gmat 3x3"
+"./gmat 4x3"
+
+4- Execute o mainEx01, Para comparar as matrizes e liberar da memória
+"./mainEx01 3x3-mat.map 4x3-mat.map" 
+

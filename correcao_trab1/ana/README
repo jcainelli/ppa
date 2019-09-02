@@ -1,0 +1,37 @@
+###################################################
+### Disciplina de Programação Paralela Avançada ###
+###################################################
+Revisão: ago/2019
+Linguagem: C
+Versão: v3 (tools, matriz)
+Executáveis: mainEx01 e gmat
+
+mainEx01: código principal de teste das funções 
+gmat: gerador de matrizes NxM em arquivo
+
+ARQUIVOS:
+
+ * Makefile: Esquema para realizar a compilação e gerar os arquivos executáveis mainEx01 e gmat. Executar console: 
+   make mainEx01
+   make gmat
+
+ * gmat: Para teste de criação da matriz. Executar no console a linha modelo abaixo, sendo que o número representa o tamanho das linha e colunas da matriz: 
+   ./gmat 9 9
+
+ * mainEx01: Para teste de comparação da matriz. Executar no console a linha modelo abaixo, sendo que o XXXX.XXX representa o nome do arquivo que contenha a matriz. 
+   Obs.: Pode ser utilizado o gmat para a criação das matrizes a serem usadas na comparação.
+   ./mainEx01 XXXX.XXX XXXX.XXX
+
+ * README-res: Resultado da geração de matriz e da comparação (compara matrizes de tamanho diferente e de tamanho iguais) utilizados no teste;
+   Obs.: Foi utilizado o valgrind.
+
+ * toolsv3.(c/h): biblioteca de leitura/escrita de matrizes em arquivos;
+
+ * matrizv3.h: headers das funções de gerência de matrizes que devem ser implementadas;
+
+ * matrizv3.c: biblioteca desenvolvida com as funções: malocar, mgerar, mimprimir, mzerar, mliberar e mcomparar;
+
+ * gera_matrizv3.c: fonte do programa de geração de matrizes em arquivo;
+
+ * mainEx01.c: fonte do programa de teste das operações de matrizes;
+ 
