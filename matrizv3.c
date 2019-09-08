@@ -57,7 +57,7 @@ int mimprimir (mymatriz *matriz){
 	int lin = (matriz)->lin;
 	int col = (matriz)->col;		
 	
-	printf("# Listando Matriz:\n");
+	printf("\n# Listando Matriz:\n");
 	for (int i=0; i < lin; i++){		
 		for (int j=0; j < col; j++){
 			int value = matriz->matriz[i][j];			
