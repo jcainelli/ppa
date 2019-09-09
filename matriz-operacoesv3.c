@@ -37,83 +37,73 @@ mymatriz *msomar (mymatriz *mat_a, mymatriz *mat_b, int tipo){
 }
 
 mymatriz *mmultiplicar (mymatriz *mat_a, mymatriz *mat_b, int tipo){
-mymatriz *mat_mult;
-
-    if (mat_a == NULL || mat_b == NULL) {
-       printf("ERRO (MMULTIPLICAR) - Matriz A e/ou Matriz B invalida(s) - nula.\n");
-       return 0;
-    }
-
-    printf(" %d  --  %d\n", mat_a->lin , mat_b->col);
-
-     if (mat_a->lin != mat_b->col) {
-       printf("ERRO (MMULTIPLICAR) - Para multiplicar o numero de linha da Matriz A e o numero de colunas da Matriz B devem ser iguais.\n");
-       return 0;
-    }
-
-    mat_mult = (mymatriz*) malloc(sizeof(mymatriz));
-    mat_mult->matriz = NULL;
-    mat_mult->lin = mat_a->lin;
-    mat_mult->col = mat_b->col;
-
-    if (malocar(mat_mult)) {
-		printf ("ERRO (MMULTIPLICAR) - Erro ao alocar matriz Soma\n");
+	mymatriz *ponteiro;
+       
+	if (mat_a->lin != mat_b->col) {
+		printf("ERRO (MMULTIPLICAR) - Para multiplicar o numero de linha da Matriz A e o numero de colunas da Matriz B devem ser iguais.\n");
+		return 0;
 	}
-	mzerar(mat_mult);
 
-    if (tipo == 0) {    //IJK
-        for(int i = 0; i < mat_a->lin; i++){
-            for(int j = 0; j < mat_b->col; j++){
-                for(int k = 0; k < mat_a->col; k++){
-                    mat_mult->matriz[i][j] += mat_a->matriz[i][k] * mat_b->matriz[k][j];
-                }
-            }
-        }
-    }
-    else if (tipo == 1) {   //IKJ
-        for(int i = 0; i < mat_a->lin; i++){
-		    for(int k = 0; k < mat_a->col; k++){
-			    for(int j = 0; j < mat_b->col; j++){
-				    mat_mult->matriz[i][j] += mat_a->matriz[i][k] * mat_b->matriz[k][j];
-			    }
-		    }
-	    }
-    }
-    else if (tipo == 2) {   //KIJ
-        for(int k = 0; k < mat_a->col; k++){
-            for(int i = 0; i < mat_a->lin; i++){
-                for(int j = 0; j < mat_b->col; j++){
-                     mat_mult->matriz[i][j] += mat_a->matriz[i][k] * mat_b->matriz[k][j];
-                }
-            }
-        }
-    }
-    else if (tipo == 3) {   //KJI
-        for(int k = 0; k < mat_a->col; k++){
-            for(int j = 0; j < mat_b->col; j++){
-                for(int i = 0; i < mat_a->lin; i++){
-                    mat_mult->matriz[i][j] += mat_a->matriz[i][k] * mat_b->matriz[k][j];
-                }
-            }
-        }
-    }
-    else if (tipo == 4) {   //JIK
-        for(int j = 0; j < mat_b->col; j++){
-		    for(int i = 0; i < mat_a->lin; i++){
-			    for(int k = 0; k < mat_a->col; k++){
-				    mat_mult->matriz[i][j] += mat_a->matriz[i][k] * mat_b->matriz[k][j];
-                }
-            }
-        }
-    }
-    else if (tipo == 5) {   //JKI
-        for(int j = 0; j < mat_b->col; j++){
-            for(int k = 0; k < mat_a->col; k++){
-                for(int i = 0; i < mat_a->lin; i++){
-                    mat_mult->matriz[i][j] += mat_a->matriz[i][k] * mat_b->matriz[k][j];
-                }
-            }
-        }
-    }
-    return mat_mult;
+    ponteiro = (mymatriz*) malloc(sizeof(mymatriz));
+    ponteiro->matriz = NULL;
+    ponteiro->lin = mat_a->lin;
+    ponteiro->col = mat_b->col;
+
+    if (malocar(ponteiro)) {
+		printf ("ERRO (MMULTIPLICAR) - Erro ao alocar matriz Soma\n");
+	}else{
+		mzerar(ponteiro);
+
+		if (tipo == 0) {
+			for(int i = 0; i < mat_a->lin; i++){
+				for(int j = 0; j < mat_b->col; j++){
+					for(int k = 0; k < mat_a->col; k++){
+						ponteiro->matriz[i][j] += mat_a->matriz[i][k] * mat_b->matriz[k][j];
+					}
+				}
+			}
+		}else if (tipo == 1) {
+			for(int i = 0; i < mat_a->lin; i++){
+				for(int k = 0; k < mat_a->col; k++){
+					for(int j = 0; j < mat_b->col; j++){
+						ponteiro->matriz[i][j] += mat_a->matriz[i][k] * mat_b->matriz[k][j];
+					}
+				}
+			}
+		}else if (tipo == 2) {
+			for(int k = 0; k < mat_a->col; k++){
+				for(int i = 0; i < mat_a->lin; i++){
+					for(int j = 0; j < mat_b->col; j++){
+						 ponteiro->matriz[i][j] += mat_a->matriz[i][k] * mat_b->matriz[k][j];
+					}
+				}
+			}
+		}else if (tipo == 3) {
+			for(int k = 0; k < mat_a->col; k++){
+				for(int j = 0; j < mat_b->col; j++){
+					for(int i = 0; i < mat_a->lin; i++){
+						ponteiro->matriz[i][j] += mat_a->matriz[i][k] * mat_b->matriz[k][j];
+					}
+				}
+			}
+		}else if (tipo == 4) {
+			for(int j = 0; j < mat_b->col; j++){
+				for(int i = 0; i < mat_a->lin; i++){
+					for(int k = 0; k < mat_a->col; k++){
+						ponteiro->matriz[i][j] += mat_a->matriz[i][k] * mat_b->matriz[k][j];
+					}
+				}
+			}
+		}else if (tipo == 5) {
+			for(int j = 0; j < mat_b->col; j++){
+				for(int k = 0; k < mat_a->col; k++){
+					for(int i = 0; i < mat_a->lin; i++){
+						ponteiro->matriz[i][j] += mat_a->matriz[i][k] * mat_b->matriz[k][j];
+					}
+				}
+			}
+		}		
+	}
+	
+	return ponteiro;
 }
