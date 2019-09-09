@@ -8,7 +8,7 @@ Programa em C para comparação de matrizes.
 * mainEx01.c: fontes do programa principal que executa as operações: mcomparar, mliberar, mimprimir, mzerar, mgerar
 * mainEx02.c: fontes do programa principal que executa as operações: msomar, mmultiplicar
 * Makefile: Arquivo para compilação dos fontes
-* mat_a3x4.tst, mat_b3x4.tst, mat_c3x4.tst, mat_d3x4.tst: Arquivos de matrizes para teste
+* mat_a3x4.tst, mat_b3x4.tst: Arquivos de matrizes para teste
 * matriz-operacoesv3.c: implementação das funções msomar, mmultiplicar
 * matriz-operacoesv3.h: Struct das funções msomar, mmultiplicar
 * matrizv3.c: fontes do programa que implementa as operações: mcomparar, mliberar, mimprimir, mzerar, mgerar
@@ -28,4 +28,4 @@ make gmat
 make mainEx02
 
 # Executar: 
- ./mainEx02 mat_a3x4.tst mat_a4x3.tst 
+ ./mainEx02 mat_a3x4.tst mat_b4x3.tst 
