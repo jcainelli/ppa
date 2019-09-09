@@ -28,5 +28,4 @@ make gmat
 make mainEx02
 
 # Executar: 
-./mainEx01 mat_b3x4.tst mat_a3x4.tst
-./mainEx02 mat_b3x4.tst mat_a3x4.tst
+ ./mainEx02 mat_a3x4.tst mat_a4x3.tst 

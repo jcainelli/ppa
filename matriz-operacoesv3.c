@@ -38,7 +38,7 @@ mymatriz *msomar (mymatriz *mat_a, mymatriz *mat_b, int tipo){
 
 mymatriz *mmultiplicar (mymatriz *mat_a, mymatriz *mat_b, int tipo){
 	mymatriz *ponteiro;
-       
+
 	if (mat_a->lin != mat_b->col) {
 		printf("ERRO (MMULTIPLICAR) - Para multiplicar o numero de linha da Matriz A e o numero de colunas da Matriz B devem ser iguais.\n");
 		return 0;
