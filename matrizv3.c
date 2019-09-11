@@ -57,7 +57,7 @@ int mimprimir (mymatriz *matriz){
 	int lin = (matriz)->lin;
 	int col = (matriz)->col;		
 	
-	printf("# Listando Matriz:\n");
+	printf("\n# Listando Matriz:\n");
 	for (int i=0; i < lin; i++){		
 		for (int j=0; j < col; j++){
 			int value = matriz->matriz[i][j];			
@@ -86,10 +86,20 @@ int mgerar(mymatriz *matriz, int valor){
 	int lin = (matriz)->lin;
 	int col = (matriz)->col;		
 	
+	if (matriz == NULL){
+		printf("# Erro ao gerar nova matriz");
+		return 1;
+	}
+
 	printf("# Gerando nova Matriz:\n");
 	for (int i=0; i < lin; i++){		
 		for (int j=0; j < col; j++){
-			matriz->matriz[i][j] = valor;
+			if (valor == -9999) {
+                matriz->matriz[i][j] = rand() % 100;
+            }
+            else {
+                matriz->matriz[i][j] = 0;
+            }
 		}
 	}
 
