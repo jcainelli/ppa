@@ -1,0 +1,42 @@
+###################################################
+### Disciplina de Programação Paralela Avançada ###
+###################################################
+Revisão: ago/2019
+Linguagem: C
+Versão: v3 (tools, matriz, matriz-operacoes)
+Executáveis: main e gmat
+
+mainExe01: código principal de teste das funções
+gmat: gerador de matrizes NxM em arquivo
+
+Para compilar os programas será necessário executar a linha de comando abaixo:
+ * acessar o diretório matrizv3. Neste diretório consta os arquivos fontes, bibliotecas e o arquivo MakeFile.
+ * make gmat;
+ * make mainEx01;
+ * make mainEx02;
+
+Para executar os programas será necessário:
+ * acessar o diretório matrizv3;
+ * ./gmat 4 4 (irá gerar um arquivo com 4 linhas e 4 colunas) e valores randomicos limitados a 100;
+ * ./gmat 5 5 (irá gerar um arquivo com 5 linhas e 5 colunas) e valores randomicos limitados a 100;
+ * ./mainEx01 4x4-mat.map 5x5-mat.map
+ * ./mainEx01 4x4-mat.map 4x4-mat.map
+ * ./gmat 3 4
+ * ./gmat 4 3
+ * ./mainEx02 4x4-mat.map 4x4-mat.map
+ * ./mainEx02 3x4-mat.map 4x3-mat.map
+ 
+
+ARQUIVOS:
+ * 4x4-mat.map,3x4-mat.map,4x3-mat.map;
+ * gera_matrizv3.c: fontes do programa de geração de matrizes em arquivo;
+ * mainEx01.c: fontes do programa de teste das matrizes;
+ * mainEx02.c: fontes do programa de teste das matrizes;
+ * MakeFile: Arquivo com a configuração de compilação dos programas;
+ * matrizv3.c: biblioteca desenvolvida com as funções: malocar, mgerar, mimprimir, mzerar, mliberar e mcomparar
+ * matrizv3.h: headers das funções de gerência de matrizes que devem ser implementadas;
+ * matriz-operacoesv3.c: headers das funções somar e multiplicar;
+ * matriz-operacoesv3.h: headers das funções somar e multiplicar que devem ser implementadas;
+ * toolsv3.(c/h): biblioteca de leitura/escrita de matrizes em arquivos;
+ * README-res: resultado da execução de exemplo;
+ 

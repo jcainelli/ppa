@@ -1,0 +1,163 @@
+CONTA_LINE_FILE:	(0):3
+CONTA_LINE_FILE:	(1):#
+CONTA_LINE_FILE:	(2):4
+CONTA_LINE_FILE:	(3):#
+CONTA_LINE_FILE:	(4):
+
+CONTA_LINE_FILE:	Line Length = [4] (3#4#)
+SPLITv2: 
+	Conteúdo da linha (3#4#)
+	Separador (#)
+	Nro de caracteres na Linha(4)
+SPLITv2: 	str[stop] = 0x55f2d64964a0 0
+SPLITv2:	conta_palavras (0) nro_caracteres_na_linha (4) stop (1)
+SPLITv2:	0 4
+SPLITv2:	{3#4#-3-0-1}
+SPLITv2:	[3/0]
+SPLITv2:	conta_palavras (1) nro_caracteres_na_linha (4) stop (3)
+SPLITv2:	1 4
+SPLITv2:	{3#4#-4-1-1}
+SPLITv2:	[4/1]
+CONTA_LINE_FILE:	nro_line_file = 3
+CONTA_LINE_FILE:	nro_line_file = 4
+CONTA_LINE_FILE:	nro_line_file = 0
+CONTA_LINE_FILE:	nro_line_file = 0
+EXTRAI_PARAMETROS_MATRIZ:	Nro de linhas = 3
+CONTABILIZA_FILE:	(0):#
+CONTABILIZA_FILE:	(1):L
+CONTABILIZA_FILE:	(2):i
+CONTABILIZA_FILE:	(3):n
+CONTABILIZA_FILE:	(4):h
+CONTABILIZA_FILE:	(5):a
+CONTABILIZA_FILE:	(6):#
+CONTABILIZA_FILE:	(7):C
+CONTABILIZA_FILE:	(8):o
+CONTABILIZA_FILE:	(9):l
+CONTABILIZA_FILE:	(10):u
+CONTABILIZA_FILE:	(11):n
+CONTABILIZA_FILE:	(12):a
+CONTABILIZA_FILE:	(13):#
+CONTABILIZA_FILE:	(14):
+
+CONTABILIZA_FILE:	Line Length = 14
+CONTABILIZA_FILE:	(1):3
+CONTABILIZA_FILE:	(2):#
+CONTABILIZA_FILE:	(3):4
+CONTABILIZA_FILE:	(4):#
+CONTABILIZA_FILE:	(5):
+
+CONTABILIZA_FILE:	Line Length = 5
+CONTABILIZA_FILE:	(1):1
+CONTABILIZA_FILE:	(2):,
+CONTABILIZA_FILE:	(3):2
+CONTABILIZA_FILE:	(4):,
+CONTABILIZA_FILE:	(5):1
+CONTABILIZA_FILE:	(6):,
+CONTABILIZA_FILE:	(7):2
+CONTABILIZA_FILE:	(8):,
+CONTABILIZA_FILE:	(9):
+
+CONTABILIZA_FILE:	Line Length = 9
+CONTABILIZA_FILE:	(1):2
+CONTABILIZA_FILE:	(2):,
+CONTABILIZA_FILE:	(3):1
+CONTABILIZA_FILE:	(4):,
+CONTABILIZA_FILE:	(5):3
+CONTABILIZA_FILE:	(6):,
+CONTABILIZA_FILE:	(7):1
+CONTABILIZA_FILE:	(8):,
+CONTABILIZA_FILE:	(9):
+
+CONTABILIZA_FILE:	Line Length = 9
+CONTABILIZA_FILE:	(1):2
+CONTABILIZA_FILE:	(2):,
+CONTABILIZA_FILE:	(3):1
+CONTABILIZA_FILE:	(4):,
+CONTABILIZA_FILE:	(5):2
+CONTABILIZA_FILE:	(6):,
+CONTABILIZA_FILE:	(7):1
+CONTABILIZA_FILE:	(8):,
+CONTABILIZA_FILE:	(9):
+
+CONTABILIZA_FILE:	Line Length = 9
+CONTABILIZA_FILE:	(1):�
+GET_LINE_FILE:	[5/2/14]
+GET_LINE_FILE:	(0)=14{0}
+GET_LINE_FILE:	posicao[14/5/2/5]
+GET_LINE_FILE:	(0):3
+GET_LINE_FILE:	(1):#
+GET_LINE_FILE:	(2):4
+GET_LINE_FILE:	(3):#
+GET_LINE_FILE:	(4):
+
+GET_LINE_FILE:	Line Length = 4 (3#4#)
+GET_LINE_FILE:	{[3#4#]}
+SPLITv2: 
+	Conteúdo da linha (3#4#)
+	Separador (#)
+	Nro de caracteres na Linha(5)
+SPLITv2: 	str[stop] = 0x55f2d64964a0 0
+SPLITv2:	conta_palavras (0) nro_caracteres_na_linha (5) stop (1)
+SPLITv2:	0 5
+SPLITv2:	{3#4#-3-0-1}
+SPLITv2:	[3/0]
+SPLITv2:	conta_palavras (1) nro_caracteres_na_linha (5) stop (3)
+SPLITv2:	1 5
+SPLITv2:	{3#4#-4-1-1}
+SPLITv2:	[4/1]
+EXTRAI_PARAMETROS_MATRIZ:	{{3/4}}
+malocar...
+valor linha: 3
+ValorColuna: 4
+tamanho matriz 13saiu do mallocar
+apos malloc
+FILEIN_MATRIZ:	Matriz (linha/coluna) = 3/4
+{##########################}
+GET_LINE_FILE:	[5/3/5]
+GET_LINE_FILE:	(0)=14{0}
+GET_LINE_FILE:	(1)=5{14}
+GET_LINE_FILE:	posicao[19/5/3/9]
+GET_LINE_FILE:	(0):1
+GET_LINE_FILE:	(1):,
+GET_LINE_FILE:	(2):2
+GET_LINE_FILE:	(3):,
+GET_LINE_FILE:	(4):1
+GET_LINE_FILE:	(5):,
+GET_LINE_FILE:	(6):2
+GET_LINE_FILE:	(7):,
+GET_LINE_FILE:	(8):
+
+GET_LINE_FILE:	Line Length = 8 (1,2,1,2,)
+GET_LINE_FILE:	{[1,2,1,2,]}
+SPLITv2: 
+	Conteúdo da linha (1,2,1,2,)
+	Separador (,)
+	Nro de caracteres na Linha(9)
+SPLITv2: 	str[stop] = 0x55f2d64964a0 0
+SPLITv2:	conta_palavras (0) nro_caracteres_na_linha (9) stop (1)
+SPLITv2:	0 9
+SPLITv2:	{1,2,1,2,-1-0-1}
+SPLITv2:	[1/0]
+SPLITv2:	conta_palavras (1) nro_caracteres_na_linha (9) stop (3)
+SPLITv2:	1 9
+SPLITv2:	{1,2,1,2,-2-1-1}
+SPLITv2:	[2/1]
+SPLITv2:	conta_palavras (2) nro_caracteres_na_linha (9) stop (5)
+SPLITv2:	2 9
+SPLITv2:	{1,2,1,2,-1-2-1}
+SPLITv2:	[1/2]
+SPLITv2:	conta_palavras (3) nro_caracteres_na_linha (9) stop (7)
+SPLITv2:	3 9
+SPLITv2:	{1,2,1,2,-2-3-1}
+SPLITv2:	[2/3]
+FILEIN_MATRIZ:	{1,2,1,2,}
+FILEIN_MATRIZ:	(0){1}{2}{1}
+FILEIN_MATRIZ:	(i[0],j[0])1
+parou aqui..FILEIN_MATRIZ:	(i[0],j[1])2
+parou aqui..FILEIN_MATRIZ:	(i[0],j[2])1
+parou aqui..FILEIN_MATRIZ:	(i[0],j[3])2
+parou aqui..GET_LINE_FILE:	[5/4/9]
+GET_LINE_FILE:	(0)=14{0}
+GET_LINE_FILE:	(1)=5{14}
+GET_LINE_FILE:	(2)=9{19}
+GE
