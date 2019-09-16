@@ -22,10 +22,13 @@ make gmat
 ./gmat 10 10
 
 # Compilar Exercicio 1 (Main):
- make mainEx
+ make mainEx01
 
 # Compilar Execicio 2 (Main):
 make mainEx02
+
+# Compilar Execicio 3 (Main):
+make mainEx03
 
 # Executar: 
  ./mainEx02 mat_a3x4.tst mat_b4x3.tst 
