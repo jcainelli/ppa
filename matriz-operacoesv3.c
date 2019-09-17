@@ -107,3 +107,16 @@ mymatriz *mmultiplicar (mymatriz *mat_a, mymatriz *mat_b, int tipo){
 	
 	return ponteiro;
 }
+
+
+matriz_bloco_t **csubmatrizv2 (int mat_lin, int mat_col, int divisor){
+
+}
+
+int mmsubmatriz (matriz_bloco_t *mat_suba, matriz_bloco_t *mat_subb, matriz_bloco_t *mat_subc){
+	return 0;
+}
+
+matriz_bloco_t **particionar_matriz (int **matriz, int mat_lin, int mat_col, int orientacao, int divisor){
+	
+}
