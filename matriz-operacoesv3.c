@@ -2,10 +2,15 @@
 #include "matriz-operacoesv3.h"
 
 mymatriz *msomar (mymatriz *mat_a, mymatriz *mat_b, int tipo){
-    int lin_a = (mat_a)->lin;
+    
+	printf("### @@ Entrou no somar \n");
+	
+	int lin_a = (mat_a)->lin;
 	int col_a = (mat_a)->col;
     int lin_b = (mat_b)->lin;
 	int col_b = (mat_b)->col;
+
+	printf("### @@ Entrou no somar %d : \n", lin_a);
 
     mymatriz *ponteiro;
     ponteiro = (mymatriz*) malloc(sizeof(mymatriz));
@@ -16,6 +21,9 @@ mymatriz *msomar (mymatriz *mat_a, mymatriz *mat_b, int tipo){
     if ((lin_a != lin_b) || (col_a != col_b)){
         printf("# As Matrizes (A) e (B) não são compatíveis no número de Linhas x Colunas");        
     }else{
+
+		printf("### @@ Entrou no somar 2\n");
+
         if (malocar(ponteiro) == 0) {            
             if(tipo == 0){ // Horizontal
                 for(int i = 0; i < lin_a; i++){
@@ -110,13 +118,16 @@ mymatriz *mmultiplicar (mymatriz *mat_a, mymatriz *mat_b, int tipo){
 
 
 matriz_bloco_t **csubmatrizv2 (int mat_lin, int mat_col, int divisor){
+	printf("### Entrou no csubmatrizv2\n\n");
 
 }
 
 int mmsubmatriz (matriz_bloco_t *mat_suba, matriz_bloco_t *mat_subb, matriz_bloco_t *mat_subc){
-	return 0;
+	printf("### Entrou no csubmatrizv2\n\n");
+
 }
 
 matriz_bloco_t **particionar_matriz (int **matriz, int mat_lin, int mat_col, int orientacao, int divisor){
-	
+	printf("### Entrou no csubmatrizv2\n\n");
+
 }

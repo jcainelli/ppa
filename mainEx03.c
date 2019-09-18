@@ -1,4 +1,3 @@
-// Vitor
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,7 +7,7 @@
 
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 int main(int argc, char *argv[]) {
-
+ 
 	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
 	// DECLARAÇÃO de VARIÁVEIS
 	mymatriz mat_a, mat_b;
@@ -20,10 +19,10 @@ int main(int argc, char *argv[]) {
 	int N, M, La, Lb;
 	double start_time, end_time;
 
-        matriz_bloco_t **Vsubmat_a = NULL;
-        matriz_bloco_t **Vsubmat_b = NULL;
-        matriz_bloco_t **Vsubmat_c = NULL;
-        int nro_submatrizes=2;
+	matriz_bloco_t *Vsubmat_a = NULL;
+	matriz_bloco_t *Vsubmat_b = NULL;
+	matriz_bloco_t *Vsubmat_c = NULL;
+	int nro_submatrizes=2;
 
 	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -71,14 +70,16 @@ int main(int argc, char *argv[]) {
 	fclose(fmat);
 	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
 
-	printf("\n%%%%%%%%%%%%%%%%\n");
+	printf("\n%%%%%%%%%%%%%%%%@@\n");
 	
 	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
 	//               Operações de Multiplicação
 	mmult = (mymatriz **) malloc (sizeof(mymatriz *));
-	printf("\n ##### multiplicar_t1 de Matrizes #####\n");
+	printf("\n ##### multiplicar_t1 de Matrizes ##### A-1\n");
 	start_time = wtime();
+	
 	mmult[0] = mmultiplicar(&mat_a, &mat_b, 1);
+	printf("\n ##### multiplicar_t1 de Matrizes ##### A-2\n");
 	end_time = wtime();
 	mimprimir(mmult[0]);
 	printf("\tRuntime: %f\n", end_time - start_time);
@@ -91,24 +92,31 @@ int main(int argc, char *argv[]) {
 	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
 	//               Operações de Multiplicação (em bloco)
 	mmultbloco = (mymatriz **) malloc (sizeof(mymatriz *));
-	printf("\n ##### multiplicar_t1 de Matrizes #####\n");
+	printf("\n ##### multiplicar_t1 de Matrizes ##### p-0\n");
 	start_time = wtime();
 
 	Vsubmat_a = particionar_matriz (mat_a.matriz, N, La, 1, 2);
+	printf("\n ##### multiplicar_t1 de Matrizes ##### P-1\n");
 	Vsubmat_b = particionar_matriz (mat_b.matriz, Lb, M, 0, 2);
+	printf("\n ##### multiplicar_t1 de Matrizes ##### P-2\n");
 	Vsubmat_c = csubmatrizv2 (N, M, nro_submatrizes);
+	printf("\n ##### multiplicar_t1 de Matrizes ##### P-3\n");
 
-	mmsubmatriz (Vsubmat_a[0], Vsubmat_b[0], Vsubmat_c[0]);
-	mmsubmatriz (Vsubmat_a[1], Vsubmat_b[1], Vsubmat_c[1]);
-	
-	*Vsubmat_c[0] = msomar(&Vsubmat_a[0], &Vsubmat_a[0], 1);
-	Vsubmat_c[1] = msomar(&Vsubmat_a[1], &Vsubmat_a[1], 1);
-	
-	//Assim não é possível
-	//msomar(Vsubmat_c[0]->matriz,Vsubmat_c[1]->matriz,mmultbloco[0], N, N, N);
-	//Assim também não, pois o msomar possui como parâmetros o mymatriz com retorno mymatriz
-	//msomar(Vsubmat_c[0], &Vsubmat_c[1], N); 
-	
+	mmsubmatriz (&Vsubmat_a[0], &Vsubmat_b[0], &Vsubmat_c[0]);
+	mmsubmatriz (&Vsubmat_a[1], &Vsubmat_b[1], &Vsubmat_c[1]);
+	//mmultbloco[0] = msomar(&Vsubmat_a[0],&Vsubmat_c->matriz, 1);
+
+	printf("\n ##### multiplicar_t1 de Matrizes ##### P-4 Antes Somar\n");
+ 
+	// Teste pegando uma referencia
+	matriz_bloco_t *mat_a_aux = &Vsubmat_a[0];	
+	mymatriz** mat_a_aux2 =  &(mat_a_aux)->matriz;
+	mymatriz* mat_a_aux3 = &mat_a_aux2;
+
+	mmultbloco[0] = msomar(mat_a_aux3,mat_a_aux3, 1);
+
+
+	printf("\n ##### multiplicar_t1 de Matrizes ##### P-5\n");
 	end_time = wtime();
 	mimprimir(mmultbloco[0]);
 	printf("\tRuntime: %f\n", end_time - start_time);
