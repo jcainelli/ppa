@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 #ifndef SOME_HEADER_FILE_H
 #define SOME_HEADER_FILE_H
@@ -12,7 +13,6 @@ typedef struct {
 } bloco_t;
 
 typedef struct {
-  //mymatriz *matriz;
   int **matriz;
   int lin;
   int col;
@@ -27,8 +27,7 @@ typedef struct {
 } matriz_bloco_t;
 #endif
 
-
-// gerência de matrizes
+// Gerência de matrizes
 int malocar (mymatriz *matriz);
 int mgerar(mymatriz *matriz, int valor);
 int mimprimir (mymatriz *matriz);
@@ -36,4 +35,12 @@ int mzerar (mymatriz *matriz);
 int mliberar (mymatriz *matriz);
 int mcomparar (mymatriz *mat_a, mymatriz *mat_b);
 
-// submatriz
+// Soma e multiplicação
+mymatriz *msomar (mymatriz *mat_a, mymatriz *mat_b, int tipo);
+mymatriz *mmultiplicar (mymatriz *mat_a, mymatriz *mat_b, int tipo);
+
+// Sub matriz
+int multiplicar_submatriz (matriz_bloco_t *mat_suba, matriz_bloco_t *mat_subb, matriz_bloco_t *mat_subc);
+int mmsubmatriz (matriz_bloco_t *mat_suba, matriz_bloco_t *mat_subb, matriz_bloco_t *mat_subc);
+matriz_bloco_t **csubmatrizv2 (int mat_lin, int mat_col, int divisor); // aloca um vetor de matrizes blocos com o número de matrizes igual ao divisor.
+matriz_bloco_t **particionar_matriz (int **matriz, int mat_lin, int mat_col, int orientacao, int divisor); // recebe uma matriz de inteiros e a particiona em n (parâmetro divisor) pedaço de acordo com a orientação (horizontal ou vertical)

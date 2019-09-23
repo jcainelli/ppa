@@ -10,7 +10,6 @@ Programa em C para comparação de matrizes.
 * Makefile: Arquivo para compilação dos fontes
 * mat_a3x4.tst, mat_b3x4.tst: Arquivos de matrizes para teste
 * matriz-operacoesv3.c: implementação das funções msomar, mmultiplicar
-* matriz-operacoesv3.h: Struct das funções msomar, mmultiplicar
 * matrizv3.c: fontes do programa que implementa as operações: mcomparar, mliberar, mimprimir, mzerar, mgerar
 * matrizv3.h: Struct das funções: mcomparar, mliberar, mimprimir, mzerar, mgerar
 * toolsv3.(c/h): biblioteca de leitura/escrita de matrizes em arquivos;  
@@ -21,11 +20,6 @@ make gmat
 # Gerar uma matriz 10x10
 ./gmat 10 10
 
-# Compilar Exercicio 1 (Main):
- make mainEx01
-
-# Compilar Execicio 2 (Main):
-make mainEx02
 
 # Compilar Execicio 3 (Main):
 make mainEx03

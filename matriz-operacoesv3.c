@@ -1,5 +1,4 @@
 #include "matrizv3.h"
-#include "matriz-operacoesv3.h"
 
 mymatriz *msomar (mymatriz *mat_a, mymatriz *mat_b, int tipo){
     
@@ -129,7 +128,7 @@ matriz_bloco_t **particionar_matriz (int **matriz, int mat_lin, int mat_col, int
 	matriz_bloco_t matriz_bloco_t_1;
 	matriz_bloco_t matriz_bloco_t_2;
 
-	mymatriz->matriz = matriz;
+	mymatriz->matriz = &matriz; // ddd - Verificar
 	mymatriz->col = mat_col;
 	mymatriz->lin = mat_lin;
 
@@ -176,7 +175,7 @@ matriz_bloco_t **particionar_matriz (int **matriz, int mat_lin, int mat_col, int
 	}
 
 	matriz_bloco_t_1.bloco = bloco_t_a;
-	matriz_bloco_t_1.matriz = mymatriz;
+	matriz_bloco_t_1.matriz = mymatriz; // ddd Aqui se não funcionar tentar com um &
 	matriz_bloco_t_1.divisor = divisor;	
 	matriz_bloco_t_1.mat_lin = mat_lin;
 	matriz_bloco_t_1.mat_col = mat_col;
@@ -268,15 +267,17 @@ int mmsubmatriz (matriz_bloco_t *mat_suba, matriz_bloco_t *mat_subb, matriz_bloc
 	printf("###   mat_subb->bloco->col_inicio : %d \n", mat_subb->bloco->col_inicio);
 	printf("###   mat_subb->bloco->col_fim    : %d \n", mat_subb->bloco->col_fim);
 
-/*
+
+	mymatriz matriz_aux = **mat_subb->matriz; // ddd - Ponto de atenção
+
 	for(int i = 0; i < mat_suba->mat_lin; i++){				
 		for(int j = 0; j < mat_suba->mat_col; j++){
-			//printf("%d, ", matriz2matriz[i][j]);
-			for(int k = 0; k < mat_suba->mat_col; k++){
+			printf("%d, ", matriz_aux->matriz[i][j]);
+			/*for(int k = 0; k < mat_suba->mat_col; k++){
 				mat_subc.matriz[i][j] += mat_a->matriz[i][k] * mat_b->matriz[k][j];
-			}
+			}*/
 		}
 		printf("\n");
 	}
-*/
+
 }

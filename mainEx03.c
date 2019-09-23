@@ -3,7 +3,6 @@
 #include <string.h>
 #include "toolsv3.h"
 #include "matrizv3.h"
-#include "matriz-operacoesv3.h"
 
 int main(int argc, char *argv[]) {
  
