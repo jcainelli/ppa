@@ -1,0 +1,22 @@
+###################################################
+### Disciplina de Programação Paralela Avançada ###
+###################################################
+Revisão: ago/2019
+Linguagem: C
+Versão: v3 (tools, matriz, matriz-operacoes)
+Executáveis: mainEx03 e gmat
+
+mainEx03.exe: programa principal de teste das funcoes da biblioteca matriz-operacoesv3.c - multiplicacao em blocos
+gmat.exe: gerador de matrizes NxM em arquivo
+
+ARQUIVOS:
+ * README-res: resultados da execucao
+                mainEx03 ==> ./mainEx03 mat_a3x4.example mat_b4x3.example
+ * mat_a3x4.example e mat_b4x3.example - matrizes exemplo A (3x4) e B(4x3)
+ * toolsv3.(c/h): biblioteca de leitura/escrita de matrizes em arquivos
+ * matrizv3.h: headers das funcoes de gerencia de matrizes
+ * matrizv3.c: biblioteca de manipulacao de matrizes contendo as funcoes: malocar, mgerar, mimprimir, mzerar, mliberar e mcomparar
+ * matriz-operacoesv3.h: headers das funções de operações de matrizes: somar, particionar e multiplicar (simples e em bloco)
+ * matriz-operacoesv3.c: biblioteca de manipulacao de matrizes contendo as funcoes: somar, particionar e multiplicar (simples e em bloco)
+ * gera_matrizv3.c: fonte do programa de geração de matrizes em arquivo
+ * mainEx03.c: fonte do programa de teste das operacoes de matrizes (multiplicacao em blocos)

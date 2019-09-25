@@ -1,0 +1,29 @@
+######## BIBLIOTECA DE MATRIZES ###############
+
+- Para compilar é necessário o arquivo Makefile.
+- Para compilar, basta acessar o terminal e digitar make. Para isso é necessário que haja os seguintes arquivos na pasta raiz:
+    - Makefile, mainEx01.c, matrizv3.c, matrizv3.h, toolsv3.h, toolsv3.c, gera_matrizv3.c.
+- Para teste, pode ser utilizado os arquivos de texto já disponibilizados na pasta raiz, ou eles podem ser criados da seguinte forma:
+    - ./gmat <qtd de linhas> <qtd colunas>
+- Para executar o programa, é necessário chama-lo no terminal com o seguinte comando:
+    - ./mainEx01 <nome do primeiro arquivo> <nome do segundo arquivo>
+- Para executar com o Valgrind, é necessário utilizar o seguinte comando:
+    - valgrind ./mainEx01 <nome do primeiro arquivo> <nome do segundo arquivo>
+
+################### BIBLIOTECA DE OPERAÇÕES ####################
+- Para compilar é necessário o arquivo Makefile.
+- Para teste, pode ser utilizado os arquivos de texto já disponibilizados na pasta raiz, ou eles podem ser criados da seguinte forma:
+ - ./gmat <qtd de linhas> <qtd colunas>
+- Para executar o programa, é necessário chama-lo no terminal com o seguinte comando:
+     ./mainEx02 <nome do primeiro arquivo> <nome do segundo arquivo>
+- Para executar com o Valgrind, é necessário utilizar o seguinte comando:
+    - valgrind ./mainEx02 <nome do primeiro arquivo> <nome do segundo arquivo>
+
+################ MULTIPLICAÇÃO EM BLOCO ######################
+- Para compilar é necessário o arquivo Makefile.
+- Para teste, pode ser utilizado os arquivos de texto já disponibilizados na pasta raiz, ou eles podem ser criados da seguinte forma:
+ - ./gmat <qtd de linhas> <qtd colunas>
+- Para executar o programa, é necessário chama-lo no terminal com o seguinte comando:
+     ./mainEx03 <nome do primeiro arquivo> <nome do segundo arquivo>
+- Para executar com o Valgrind, é necessário utilizar o seguinte comando:
+    - valgrind ./mainEx03 <nome do primeiro arquivo> <nome do segundo arquivo>
