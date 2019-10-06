@@ -26,7 +26,7 @@ typedef struct {
 } mymatriz;
 #endif
 
-// gerência de matrizes
+// gerï¿½ncia de matrizes
 int malocar (mymatriz *matriz);
 int mgerar(mymatriz *matriz, int valor);
 int mimprimir (mymatriz *matriz);

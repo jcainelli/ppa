@@ -15,11 +15,19 @@ Programa em C para comparação de matrizes.
 * matrizv3.h: Struct das funções: mcomparar, mliberar, mimprimir, mzerar, mgerar
 * toolsv3.(c/h): biblioteca de leitura/escrita de matrizes em arquivos;  
 
+# Compilar todos
+make clean; make
+
+# Gerar Matrizes
+./gmat 100 200
+./gmat 200 100
+
+# Valgrind
+valgrind ./mainEx03 100x200-mat.map 200x100-mat.map
+
 # Compilar a biblioteca Gmat (gera_matrizv3.c) para gerar uma matriz
 make gmat
 
-# Gerar uma matriz 10x10
-./gmat 10 10
 
 # Compilar Exercicio 1 (Main):
  make mainEx01

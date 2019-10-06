@@ -24,7 +24,6 @@ int main(int argc, char *argv[]) {
         int nro_submatrizes=2;
 
 	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
-prinf("cocooooooooooooooooooooooooooooooooooooooooooooooooooo");
 	if (argc != 3){
 		printf ("ERRO: Numero de parametros %s <matriz_a> <matriz_b>\n", argv[0]);
 		exit (1);
@@ -68,8 +67,6 @@ prinf("cocooooooooooooooooooooooooooooooooooooooooooooooooooo");
 	free (vet_line);
 	fclose(fmat);
 	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
-
-	printf("\n%%%%%%%%%%%%%%%%\n");
 	
 	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
 	//               Operações de Multiplicação

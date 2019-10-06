@@ -12,12 +12,12 @@ typedef struct {
   int col_inicio;
   int col_fim;
 } bloco_t;
-
+/*
 typedef struct {
   int **matriz;
   bloco_t *bloco;
 } matriz_bloco_t;
-
+*/
 typedef struct {
   int **matriz;
   int lin;

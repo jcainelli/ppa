@@ -4,7 +4,6 @@
 mymatriz *msomar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
    mymatriz *mat_soma;
  
-	printf("TESTEe merda");
     if (mat_a == NULL || mat_b == NULL) {
        printf("ERRO (MSOMAR) - Matriz A e/ou Matriz B invalida(s) - nula.\n");
        return NULL;
