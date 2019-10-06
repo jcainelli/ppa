@@ -1,32 +1,38 @@
-#include "matrizv3.h"
+#include "matrizv3.h" 
 
 int malocar(mymatriz *mat) {
-    int i;
+
     mat->matriz = NULL;
-    mat->matriz = (int **) malloc(mat->lin * sizeof(int*));
 
-    for(i = 0; i < mat->lin; i++){
-        mat->matriz[i] = (int *) malloc(mat->col * sizeof(int));
+    mat->matriz = (int **) malloc(mat->lin*sizeof(int*));
+    for(int i = 0; i < mat->lin; i++){
+        mat->matriz[i] = (int *) malloc(mat->col*sizeof(int));
     }
-
     if (mat == NULL) {
         printf("ERRO (MALOCAR) - Sem memoria\n");
+        //Retorno FALSE porem esta invertido porque na chamada do malocar o prof nao colocou !
         return 1;
     }
+    //Retorno TRUE porem esta invertido porque na chamada do malocar o prof nao colocou !
     return 0;
 }
 
 int mgerar(mymatriz *matriz, int valor){
-    if (matriz == NULL) {
-		printf("ERRO (MGERAR) - Matriz passada como parâmetro é nula, verifique!!");
+
+    if (valor != -9999 && valor != 0) {
+        printf("ERRO (MGERAR) - Valor passado como entrada nao esta dentre os esperados para a funcao. Valores esperados: -9999 ou 0.\n");
         return 0;
     }
-    int i, j;
 
-    for(i = 0; i < matriz->lin; i++){
-        for(j = 0; j < matriz->col; j++){
+    if (matriz == NULL) {
+       printf("ERRO (MGERAR) - Matriz invalida - nula.\n");
+       return 0;
+    }
+
+    for(int i = 0; i < matriz->lin; i++){
+        for(int j = 0; j < matriz->col; j++){
             if (valor == -9999) {
-                matriz->matriz[i][j] = rand() % 100;
+                matriz->matriz[i][j] = rand() % 10;
             }
             else {
                 matriz->matriz[i][j] = 0;
@@ -37,59 +43,62 @@ int mgerar(mymatriz *matriz, int valor){
 }
 
 int mimprimir(mymatriz *matriz){
-    if (matriz == NULL) {
-		printf("ERRO (MIMPRIMIR) - Matriz passada como parâmetro é nula, verifique!!");
-        return 0;
-    }
-    int i, j;
 
-	for (j = 0; j < matriz->col; j++)
+   if (matriz == NULL) {
+       printf("ERRO (MGERAR) - Matriz invalida - nula.\n");
+       return 0;
+    }
+
+	for (int j = 0; j < matriz->col; j++)
 		printf("\t(%d)", j);
-	    printf("\n");
-	    for (i = 0; i < matriz->lin; i++) {
-		    printf("(%d)", i);
-	        for (j = 0; j < matriz->col; j++){
-			    printf("\t%d", matriz->matriz[i][j]);
-		    }
-		    printf("\n");
+	printf("\n");
+	for (int i = 0; i < matriz->lin; i++) {
+		printf("(%d)", i);
+        for (int j = 0; j < matriz->col; j++){
+			printf("\t%d", matriz->matriz[i][j]);
+		}
+		printf("\n");
 	}
 	return 1;
 }
 
 int mzerar(mymatriz *matriz){
-    return mgerar(matriz, 0);
+    return mgerar(matriz,0);
 }
 
 int mliberar(mymatriz *matriz) {
-    int i;
 
-    for(i = 0; i < matriz->lin; i++){
-        free(matriz->matriz[i]);
+    if (matriz == NULL) {
+       printf("ERRO (MLIBERAR) - Matriz invalida - nula.\n");
+       return 0;
     }
 
+    for(int i = 0; i < matriz->lin; i++){
+        free(matriz->matriz[i]);
+    }
     return 1;
 }
 
 int mcomparar(mymatriz *matriza, mymatriz *matrizb){
-    int i, j;
 
-    if (!matriza || !matrizb) {
-        printf("ERRO (MCOMPARAR): Matrizes nao inicializadas\n");
-        return 0;
-    }
-    if  ((matriza->lin != matrizb->lin) && (matriza->col != matrizb->col)){
-        printf("ERRO (MCOMPARAR): MatrizA com definição linha/coluna diferente da MatrizB.\n");
-        return 0;
+   if (matriza == NULL || matrizb == NULL) {
+       printf("ERRO (MCOMPARAR) - Matriz A e/ou Matriz B invalida(s) - nula.\n");
+       return 0;
     }
 
-	for (i=0; i < matriza->lin; i++) {
-	  for (j=0; j < matriza->col; j++){
+   if (matriza->lin != matrizb->lin || matriza->col != matrizb->col) {
+       printf("ERRO (MCOMPARAR) - A Matriz A e Matriz B divergem no numero de linhas e colunas.\n");
+       return 0;
+    }
+
+	for (int i=0; i < matriza->lin; i++) {
+	  for (int j=0; j < matriza->col; j++){
 			if (matriza->matriz[i][j] != matrizb->matriz[i][j]) {
-				printf("ERRO (MCOMPARAR): O elemento [%d,%d] eh diferente nas matrizes: %d != %d\n", i,j,matriza->matriz[i][j], matrizb->matriz[i][j]);
+				printf("(MCOMPARAR) O elemento [%d,%d] eh diferente nas matrizes: %d != %d\n", i,j,matriza->matriz[i][j], matrizb->matriz[i][j]);
 				return 0;
 			}
 		}
 	}
-	printf("(MCOMPARAR): MatrizA é idênticas MatrizB\n\n");
+	printf("VERIFICADO (MCOMPARAR): Matrizes identicas\n\n");
     return 1;
 }

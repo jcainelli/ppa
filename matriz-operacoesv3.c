@@ -3,7 +3,7 @@
 
 mymatriz *msomar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
    mymatriz *mat_soma;
- 
+
     if (mat_a == NULL || mat_b == NULL) {
        printf("ERRO (MSOMAR) - Matriz A e/ou Matriz B invalida(s) - nula.\n");
        return NULL;
@@ -121,38 +121,56 @@ mymatriz *mmultiplicar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
     return mat_mult;
 }
 
-
 int mmsubmatriz (matriz_bloco_t *mat_suba, matriz_bloco_t *mat_subb, matriz_bloco_t *mat_subc) {
-    
-    if(!mat_suba || !mat_subb || !mat_subc){
-		printf("ERRO (MMSUBMATRIZ) - Matriz(es) invalida(s)\n");
-		return 1;
-	}
+  /*
+  printf("\nSUBMAT A - Numero de Linhas : %d", mat_suba->matriz->lin );
+  printf("\nSUBMAT A - Numero de Colunas: %d", mat_suba->matriz->col );
+  printf("\nSUBMAT A - Linha Inicio     : %d", mat_suba->bloco->lin_inicio );
+  printf("\nSUBMAT A - Linha Fim        : %d", mat_suba->bloco->lin_fim );
+  printf("\nSUBMAT A - Coluna Inicio    : %d", mat_suba->bloco->col_inicio );
+  printf("\nSUBMAT A - Coluna Fim       : %d", mat_suba->bloco->col_fim);
 
-    int i,j,k;
-    for(i = mat_suba->bloco->lin_inicio; i < mat_suba->bloco->lin_fim; i++){
-        for(k = mat_suba->bloco->col_inicio; k < mat_suba->bloco->col_fim; k++){
-            for(j = mat_subb->bloco->col_inicio; j < mat_subb->bloco->col_fim; j++){
-                mat_subc->matriz[i][j] += mat_suba->matriz[i][k] * mat_subb->matriz[k][j];
-            }
-        }
+  printf("\nSUBMAT B - Numero de Linhas : %d", mat_subb->matriz->lin );
+  printf("\nSUBMAT B - Numero de Colunas: %d", mat_subb->matriz->col );
+  printf("\nSUBMAT B - Linha Inicio     : %d", mat_subb->bloco->lin_inicio );
+  printf("\nSUBMAT B - Linha Fim        : %d", mat_subb->bloco->lin_fim );
+  printf("\nSUBMAT B - Coluna Inicio    : %d", mat_subb->bloco->col_inicio );
+  printf("\nSUBMAT B - Coluna Fim       : %d", mat_subb->bloco->col_fim);
+  */
+
+  if(!mat_suba || !mat_subb || !mat_subc){
+		printf("ERRO (MMSUBMATRIZ) - Matriz(es) invalida(s) ou nula(s).\n");
+		exit(1);
+	}
+  
+  if(mat_suba->matriz->col != mat_subb->matriz->lin){
+    printf("ERRO (MMSUBMATRIZ) - Numero de colunas da Matriz A eh diferente do Numero de linhas da Matriz B. Multiplicacao nao eh possivel.");
+    exit(1);
+  }
+
+  for (int i = mat_suba->bloco->lin_inicio; i < mat_suba->bloco->lin_fim; i++) {
+    for (int k = mat_suba->bloco->col_inicio; k < mat_suba->bloco->col_fim; k++){
+      for (int j = mat_subb->bloco->col_inicio; j < mat_subb->bloco->col_fim; j++) {
+        mat_subc->matriz->matriz[i][j] += mat_suba->matriz->matriz[i][k] * mat_subb->matriz->matriz[k][j];
+      }
     }
-    return 0;
+  }
+  return 0;
 }
 
-matriz_bloco_t **particionar_matriz (int **matriz, int mat_lin, int mat_col, int orientacao, int divisor) {
-  
+matriz_bloco_t **particionar_matriz(int **matriz, int mat_lin, int mat_col, int orientacao, int divisor)
+{
   matriz_bloco_t **block = NULL;
   block = (matriz_bloco_t **) calloc(divisor, sizeof(matriz_bloco_t*));
-  
+
   if (!block || !matriz) {
-    printf("ERRO (PARTICIONAR_MATRIZ) - Matriz invalida\n");
-    return NULL;
+    printf("ERRO (PARTICIONAR_MATRIZ) - Matriz invalida ou nula.\n");
+    exit(1);
   }
 
   if (orientacao != 0 && orientacao != 1) {
     printf("ERRO (PARTICIONAR_MATRIZ) - A orientacao deve ser valores de: 1 para horizontal e 0 para vertical \n");
-    return NULL;
+    exit(1);
   }
 
   for(int i = 0; i< divisor; i++){
@@ -160,28 +178,38 @@ matriz_bloco_t **particionar_matriz (int **matriz, int mat_lin, int mat_col, int
     block[i]->bloco = (bloco_t *) malloc(sizeof(bloco_t));
   }
 
-  if(orientacao == 1){
+  mymatriz *newMatriz = (mymatriz*)malloc(sizeof(mymatriz));
+  newMatriz->matriz = matriz;
+  newMatriz->lin = mat_lin;
+  newMatriz->col = mat_col;
+
+   if(orientacao == 0){ //vertical
     int desloc = mat_lin/divisor;
     for(int i=0; i<divisor; i++){
-      block[i]->matriz = matriz;
+      block[i]->matriz = newMatriz;
+      block[i]->matriz->lin = newMatriz->lin;
+      block[i]->matriz->col = newMatriz->col;
       block[i]->bloco->lin_inicio = i * desloc;
       block[i]->bloco->lin_fim = (i+1) * desloc;
       block[i]->bloco->col_inicio = 0;
       block[i]->bloco->col_fim = mat_col;
-
     }
     block[divisor-1]->bloco->lin_fim = mat_lin;
-  } else {
+
+  } else { //horizontal
     int desloc = mat_col/divisor;
     for(int i=0; i<divisor; i++){
-      block[i]->matriz = matriz;
+      block[i]->matriz = newMatriz;
+      block[i]->matriz->lin = newMatriz->lin;
+      block[i]->matriz->col = newMatriz->col;
       block[i]->bloco->lin_inicio = 0;
       block[i]->bloco->lin_fim = mat_lin;
       block[i]->bloco->col_inicio = i * desloc;
-      block[i]->bloco->col_fim = (i+1) * desloc;
+      block[i]->bloco->col_fim = (i+1) * desloc;    
     }
     block[divisor-1]->bloco->col_fim = mat_col;
-  }
+
+  }    
   return block;
 }
 
@@ -190,30 +218,29 @@ matriz_bloco_t **csubmatrizv2 (int mat_lin, int mat_col, int divisor) {
   matriz_bloco_t **block = NULL;
   block = (matriz_bloco_t **) calloc(divisor, sizeof(matriz_bloco_t*));
   if (!block) {
-    printf("ERRO (CSUBMATRIZV2: Matriz invalida.\n");
-    return NULL;
+    printf("ERRO (CSUBMATRIZV2): Matriz invalida.\n");
+    exit(1);
   }
 
-  for(int i = 0; i< divisor; i++){
+  for(int i = 0; i < divisor; i++){
     block[i] = (matriz_bloco_t *) malloc(sizeof(matriz_bloco_t));
     block[i]->bloco = (bloco_t *) malloc(sizeof(bloco_t));
   }
 
   for(int i=0; i<divisor; i++){
-
     mymatriz *mat_result; 
     mat_result = (mymatriz*) malloc(sizeof(mymatriz));
     mat_result->matriz = NULL;
-	mat_result->lin = mat_lin;
-	mat_result->col = mat_col;
-	if (malocar(mat_result)) {
-		printf("ERRO (CSUBMATRIZV2: Matriz invalida.\n");
-        return NULL;
-	}
+	  mat_result->lin = mat_lin;
+	  mat_result->col = mat_col;
+
+	  if (malocar(mat_result)) {
+		  printf("ERRO (CSUBMATRIZV2): Erro ao alocar matriz.\n");
+      exit(1);
+	  }
     mzerar(mat_result); 
 
-    int **matBl = mat_result->matriz;
-    block[i]->matriz = matBl;
+    block[i]->matriz = mat_result;
     block[i]->bloco->lin_inicio = 0;
     block[i]->bloco->lin_fim = mat_lin;
     block[i]->bloco->col_inicio = 0;
@@ -221,4 +248,3 @@ matriz_bloco_t **csubmatrizv2 (int mat_lin, int mat_col, int divisor) {
   }
 	return block;
 }
-

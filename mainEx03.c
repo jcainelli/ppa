@@ -21,9 +21,11 @@ int main(int argc, char *argv[]) {
 
         matriz_bloco_t **Vsubmat_a = NULL;
         matriz_bloco_t **Vsubmat_b = NULL;
+		matriz_bloco_t **Vsubmat_c = NULL;
         int nro_submatrizes=2;
 
 	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
+
 	if (argc != 3){
 		printf ("ERRO: Numero de parametros %s <matriz_a> <matriz_b>\n", argv[0]);
 		exit (1);
@@ -47,6 +49,10 @@ int main(int argc, char *argv[]) {
 	filein_matriz (mat_a.matriz, N, La, fmat, vet_line, nr_line);
 	free (vet_line);
 	fclose(fmat);
+	printf("I-Imprimindo Matriz A.\n");
+	mimprimir(&mat_a);
+	printf("F-Imprimindo Matriz A.\n");
+
 	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
 
 	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
@@ -67,6 +73,11 @@ int main(int argc, char *argv[]) {
 	free (vet_line);
 	fclose(fmat);
 	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
+	printf("I-Imprimindo Matriz B.\n");
+	mimprimir(&mat_b);
+	printf("F-Imprimindo Matriz B.\n");
+
+	printf("\n%%%%%%%%%%%%%%%%\n");
 	
 	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
 	//               Operações de Multiplicação
@@ -82,23 +93,37 @@ int main(int argc, char *argv[]) {
 	fileout_matriz(mmult[0], fmat);
 	fclose(fmat);
 	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
+	printf("I-Imprimindo Matriz mmult[0].\n");
+	mimprimir(mmult[0]);
+	printf("F-Imprimindo Matriz mmult[0].\n");
 
 	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
 	//               Operações de Multiplicação (em bloco)
 	mmultbloco = (mymatriz **) malloc (sizeof(mymatriz *));
-	printf("\n ##### multiplicar_t1 de Matrizes #####\n");
+	printf("\n ##### multiplicar_t1 de Matrizes - MULTIPLICACAO <por bloco> #####\n");
 	start_time = wtime();
 
-	Vsubmat_a = particionar_matriz (mat_a, N, La, 1, 2);
-	Vsubmat_b = particionar_matriz (mat_b, Lb, M, 0, 2);
+	Vsubmat_a = particionar_matriz (mat_a.matriz, N, La, 1, 2);
+	Vsubmat_b = particionar_matriz (mat_b.matriz, Lb, M, 0, 2);
 	Vsubmat_c = csubmatrizv2 (N, M, nro_submatrizes);
 
 	mmsubmatriz (Vsubmat_a[0], Vsubmat_b[0], Vsubmat_c[0]);
-	mmsubmatriz (Vsubmat_a[1], Vsubmat_b[1], Vsubmat_c[1]);
-	msomar(Vsubmat_c[0]->matriz,Vsubmat_c[1]->matriz,mmultbloco[0], N, N, N);
-	
+	mmsubmatriz (Vsubmat_a[1], Vsubmat_b[1], Vsubmat_c[1]); 
+	mmultbloco[0] = msomar(Vsubmat_c[0]->matriz, Vsubmat_c[1]->matriz, 1);
+
+//	printf("\nI-Imprimindo Matriz Vsubmat_c[0].\n");
+	//mimprimir(Vsubmat_c[0]->matriz);
+//	printf("\nF-Imprimindo Matriz Vsubmat_c[0].\n");
+
+//	printf("\nI-Imprimindo Matriz Vsubmat_c[1].\n");
+//	mimprimir(Vsubmat_c[1]->matriz);
+//	printf("\nF-Imprimindo Matriz Vsubmat_c[1].\n");
+
 	end_time = wtime();
+	printf("\nI-Imprimindo Matriz mmultBloco[0].\n");
 	mimprimir(mmultbloco[0]);
+	printf("\nF-Imprimindo Matriz mmultBloco[0].\n");
+
 	printf("\tRuntime: %f\n", end_time - start_time);
 	sprintf(filename, "mult_t1.result");
 	fmat = fopen(filename,"w");
@@ -110,7 +135,7 @@ int main(int argc, char *argv[]) {
 	//              Comparação dos resultados
 	printf("\n ##### Comparação dos resultados da Multiplicação de matrizes #####\n");
 	printf("[mult_t0 vs multbloco_t0]\t");
-	mcomparar (mat_mult[0],mmultbloco[0]);
+	mcomparar (mmult[0],mmultbloco[0]);
 	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
 
 	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
