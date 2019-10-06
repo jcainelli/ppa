@@ -82,23 +82,23 @@ int mliberar(mymatriz *matriz) {
 int mcomparar(mymatriz *matriza, mymatriz *matrizb){
 
    if (matriza == NULL || matrizb == NULL) {
-       printf("ERRO (MCOMPARAR) - Matriz A e/ou Matriz B invalida(s) - nula.\n");
+       printf("Matriz A e/ou Matriz B invalida(s) - nula.");
        return 0;
     }
 
    if (matriza->lin != matrizb->lin || matriza->col != matrizb->col) {
-       printf("ERRO (MCOMPARAR) - A Matriz A e Matriz B divergem no numero de linhas e colunas.\n");
+       printf("A Matriz A e Matriz B divergem no numero de linhas e colunas.");
        return 0;
     }
 
 	for (int i=0; i < matriza->lin; i++) {
 	  for (int j=0; j < matriza->col; j++){
 			if (matriza->matriz[i][j] != matrizb->matriz[i][j]) {
-				printf("(MCOMPARAR) O elemento [%d,%d] eh diferente nas matrizes: %d != %d\n", i,j,matriza->matriz[i][j], matrizb->matriz[i][j]);
+				printf("O elemento [%d,%d] eh diferente nas matrizes: %d != %d", i,j,matriza->matriz[i][j], matrizb->matriz[i][j]);
 				return 0;
 			}
 		}
 	}
-	printf("VERIFICADO (MCOMPARAR): Matrizes identicas\n\n");
+	printf("Matrizes identicas");
     return 1;
 }
