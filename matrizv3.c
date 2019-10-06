@@ -1,107 +1,102 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "toolsv3.h"
 #include "matrizv3.h"
 
+int malocar(mymatriz *mat) {
+    int i;
+    mat->matriz = NULL;
 
-int malocar (mymatriz *pMatriz){
+    //mat->matriz = (int **) calloc(mat->lin, sizeof(int*));
+    mat->matriz = (int **) malloc(mat->lin * sizeof(int*));
+    for(i = 0; i < mat->lin; i++){
+        //mat->matriz[i] = (int *) calloc(mat->col, sizeof(int));
+        mat->matriz[i] = (int *) malloc(mat->col * sizeof(int));
+    }
 
-	pMatriz->matriz = malloc(pMatriz->lin*sizeof(int*));
-
-	for(int i = 0; i < pMatriz->lin; i++){
-		pMatriz->matriz[i] = malloc(pMatriz->col*sizeof(int));
-		for (int j =0; j < pMatriz->col; j++){
-			pMatriz->matriz[i][j] = 0;
-		}
-	}
-
-	return 0;
+    if (mat == NULL) {
+        printf("LEON:ERRO (MALOCAR) - Sem memoria\n");
+        //O retorno esta invertido para não ter que mexer no programa chamador, pois o mesmo não
+        // trata a negação da chamada.
+        return 1;
+    }
+    return 0;
 }
 
+int mgerar(mymatriz *matriz, int valor){
+    if (matriz == NULL) {
+		printf("LEON:ERRO (MGERAR) - Matriz passada como parâmetro é nula, verifique!!");
+        return 0;
+    }
+    int i, j;
 
-int mcomparar (mymatriz *mat_a, mymatriz *mat_b){
-	int lin_a = (mat_a)->lin;
-	int col_a = (mat_a)->col;	
-	int lin_b = (mat_b)->lin;
-	int col_b = (mat_b)->col;
-	
-	if ((lin_a != lin_b) || (col_a != col_b)){
-		printf("\n### Resultado: mat_a é DIFERENTE(!=) da mat_b\n");
-		return 1;
-	}
-
-	for (int i=0; i < lin_a; i++){		
-		for (int j=0; j < col_a; j++){
-			int value_a = mat_a->matriz[i][j];
-			int value_b = mat_b->matriz[i][j];
-			if (value_a != value_b){
-				printf("\n### Resultado: mat_a é DIFERENTE(!=)  da mat_b\n");
-				return 1;
-			}			
-		}
-	}
-	
-	printf("\n### Resultado: mat_a é IGUAL(==) da mat_b\n");
-
-	return 0;
-}
-
-
-int mliberar (mymatriz *matriz){
- 	free((matriz)->matriz); 
-	return 0;
-}
-
-int mimprimir (mymatriz *matriz){
-	int lin = (matriz)->lin;
-	int col = (matriz)->col;		
-	
-	printf("\n# Listando Matriz:\n");
-	for (int i=0; i < lin; i++){		
-		for (int j=0; j < col; j++){
-			int value = matriz->matriz[i][j];			
-			printf("[%d],", value);
-		}
-		printf("\n");
-	}
-	return 0;
-}
-
-int mzerar (mymatriz *matriz){
-	int lin = (matriz)->lin;
-	int col = (matriz)->col;		
-	
-	printf("# Listando Matriz:\n");
-	for (int i=0; i < lin; i++){		
-		for (int j=0; j < col; j++){
-			matriz->matriz[i][j] = 0;
-		}
-	}
-
-	return 0;
-}
-
-int mgerar(mymatriz *matriz, int valor){	
-	int lin = (matriz)->lin;
-	int col = (matriz)->col;		
-	
-	if (matriz == NULL){
-		printf("# Erro ao gerar nova matriz");
-		return 1;
-	}
-
-	printf("# Gerando nova Matriz:\n");
-	for (int i=0; i < lin; i++){		
-		for (int j=0; j < col; j++){
-			if (valor == -9999) {
+    for(i = 0; i < matriz->lin; i++){
+        for(j = 0; j < matriz->col; j++){
+            if (valor == -9999) {
                 matriz->matriz[i][j] = rand() % 100;
             }
             else {
                 matriz->matriz[i][j] = 0;
             }
+        }
+    }
+    return 1;
+}
+
+int mimprimir(mymatriz *matriz){
+    if (matriz == NULL) {
+		printf("LEON:ERRO (MIMPRIMIR) - Matriz passada como parâmetro é nula, verifique!!");
+        return 0;
+    }
+    int i, j;
+
+	for (j = 0; j < matriz->col; j++)
+		printf("\t(%d)", j);
+	    printf("\n");
+	    for (i = 0; i < matriz->lin; i++) {
+		    printf("(%d)", i);
+	        for (j = 0; j < matriz->col; j++){
+			    printf("\t%d", matriz->matriz[i][j]);
+		    }
+		    printf("\n");
+	}
+	return 1;
+}
+
+int mzerar(mymatriz *matriz){
+    return mgerar(matriz, 0);
+}
+
+int mliberar(mymatriz *matriz) {
+   int i;
+
+    for(i = 0; i < matriz->lin; i++){
+        free(matriz->matriz[i]);
+    }
+
+    //free(matriz);
+
+    return 1;
+}
+
+int mcomparar(mymatriz *matriza, mymatriz *matrizb){
+    int i, j;
+
+    if (!matriza || !matrizb) {
+        printf("LEON:ERRO (MCOMPARAR): Matrizes nao inicializadas\n");
+        return 0;
+    }
+    if  ((matriza->lin != matrizb->lin) && (matriza->col != matrizb->col)){
+        printf("LEON:ERRO (MCOMPARAR): MatrizA com definição linha/coluna diferente da MatrizB.\n");
+        return 0;
+    }
+
+	for (i=0; i < matriza->lin; i++) {
+	  for (j=0; j < matriza->col; j++){
+			if (matriza->matriz[i][j] != matrizb->matriz[i][j]) {
+				printf("LEON:ERRO (MCOMPARAR): O elemento [%d,%d] eh diferente nas matrizes: %d != %d\n", i,j,matriza->matriz[i][j], matrizb->matriz[i][j]);
+				return 0;
+			}
 		}
 	}
-
-	return 0;
+	printf("(MCOMPARAR): MatrizA é idênticas MatrizB\n\n");
+    return 1;
 }
+

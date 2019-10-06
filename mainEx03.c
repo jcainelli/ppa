@@ -5,8 +5,11 @@
 #include "matrizv3.h"
 #include "matriz-operacoesv3.h"
 
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 int main(int argc, char *argv[]) {
- 
+
+	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
+	// DECLARAÇÃO de VARIÁVEIS
 	mymatriz mat_a, mat_b;
 	mymatriz **mmultbloco, **mmult;
 	char filename[100];
@@ -16,11 +19,12 @@ int main(int argc, char *argv[]) {
 	int N, M, La, Lb;
 	double start_time, end_time;
 
-	matriz_bloco_t *Vsubmat_a = NULL;
-	matriz_bloco_t *Vsubmat_b = NULL;
-	matriz_bloco_t *Vsubmat_c = NULL;
-	int nro_submatrizes=2;
+        matriz_bloco_t **Vsubmat_a = NULL;
+        matriz_bloco_t **Vsubmat_b = NULL;
+        int nro_submatrizes=2;
 
+	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
+prinf("cocooooooooooooooooooooooooooooooooooooooooooooooooooo");
 	if (argc != 3){
 		printf ("ERRO: Numero de parametros %s <matriz_a> <matriz_b>\n", argv[0]);
 		exit (1);
@@ -34,7 +38,7 @@ int main(int argc, char *argv[]) {
 		exit(1);
 	}
 	extrai_parametros_matriz(fmat, &N, &La, &vet_line, &nr_line);
-
+	//return 1;
 	mat_a.matriz = NULL;
 	mat_a.lin = N;
 	mat_a.col = La;
@@ -44,6 +48,7 @@ int main(int argc, char *argv[]) {
 	filein_matriz (mat_a.matriz, N, La, fmat, vet_line, nr_line);
 	free (vet_line);
 	fclose(fmat);
+	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
 
 	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
 	//               Leitura da Matriz B (arquivo)
@@ -62,14 +67,15 @@ int main(int argc, char *argv[]) {
 	filein_matriz (mat_b.matriz, Lb, M, fmat, vet_line, nr_line);
 	free (vet_line);
 	fclose(fmat);
+	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
 
-
+	printf("\n%%%%%%%%%%%%%%%%\n");
+	
 	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
 	//               Operações de Multiplicação
 	mmult = (mymatriz **) malloc (sizeof(mymatriz *));
 	printf("\n ##### multiplicar_t1 de Matrizes #####\n");
 	start_time = wtime();
-	
 	mmult[0] = mmultiplicar(&mat_a, &mat_b, 1);
 	end_time = wtime();
 	mimprimir(mmult[0]);
@@ -78,36 +84,22 @@ int main(int argc, char *argv[]) {
 	fmat = fopen(filename,"w");
 	fileout_matriz(mmult[0], fmat);
 	fclose(fmat);
-
+	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
 
 	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
 	//               Operações de Multiplicação (em bloco)
 	mmultbloco = (mymatriz **) malloc (sizeof(mymatriz *));
+	printf("\n ##### multiplicar_t1 de Matrizes #####\n");
 	start_time = wtime();
- 
-	Vsubmat_a = particionar_matriz (mat_a.matriz, N, La, 1, 2);
-	Vsubmat_b = particionar_matriz (mat_b.matriz, Lb, M, 0, 2);
 
+	Vsubmat_a = particionar_matriz (mat_a, N, La, 1, 2);
+	Vsubmat_b = particionar_matriz (mat_b, Lb, M, 0, 2);
 	Vsubmat_c = csubmatrizv2 (N, M, nro_submatrizes);
 
-
-	mmsubmatriz (&Vsubmat_a[0], &Vsubmat_b[0], &Vsubmat_c[0]);
+	mmsubmatriz (Vsubmat_a[0], Vsubmat_b[0], Vsubmat_c[0]);
+	mmsubmatriz (Vsubmat_a[1], Vsubmat_b[1], Vsubmat_c[1]);
+	msomar(Vsubmat_c[0]->matriz,Vsubmat_c[1]->matriz,mmultbloco[0], N, N, N);
 	
-	mmsubmatriz (&Vsubmat_a[1], &Vsubmat_b[1], &Vsubmat_c[1]);
-	
-	//mmultbloco[0] = msomar(&Vsubmat_a[0],&Vsubmat_c->matriz, 1);
-
-	printf("\n ##### multiplicar_t1 de Matrizes ##### P-4 Antes Somar\n");
- 
-	// Teste pegando uma referencia
-	matriz_bloco_t *mat_a_aux = &Vsubmat_a[0];	
-	mymatriz** mat_a_aux2 =  &(mat_a_aux)->matriz;
-	mymatriz* mat_a_aux3 = &mat_a_aux2;
-
-	mmultbloco[0] = msomar(mat_a_aux3,mat_a_aux3, 1);
- 
-
-	printf("\n ##### multiplicar_t1 de Matrizes ##### P-5\n");
 	end_time = wtime();
 	mimprimir(mmultbloco[0]);
 	printf("\tRuntime: %f\n", end_time - start_time);
@@ -121,11 +113,9 @@ int main(int argc, char *argv[]) {
 	//              Comparação dos resultados
 	printf("\n ##### Comparação dos resultados da Multiplicação de matrizes #####\n");
 	printf("[mult_t0 vs multbloco_t0]\t");
-	mcomparar (mmult[0],mmultbloco[0]);
+	mcomparar (mat_mult[0],mmultbloco[0]);
 	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
 
-
-	printf("\nLiberação de memoria\n");
 	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
 	//                   Liberação de memória
 	mliberar(mmult[0]);

@@ -27,13 +27,6 @@ typedef struct {
 
 mymatriz *msomar (mymatriz *mat_a, mymatriz *mat_b, int tipo);
 mymatriz *mmultiplicar (mymatriz *mat_a, mymatriz *mat_b, int tipo);
-
-int multiplicar_submatriz (matriz_bloco_t *mat_suba, matriz_bloco_t *mat_subb, matriz_bloco_t *mat_subc);
-
 int mmsubmatriz (matriz_bloco_t *mat_suba, matriz_bloco_t *mat_subb, matriz_bloco_t *mat_subc);
-
-// aloca um vetor de matrizes blocos com o número de matrizes igual ao divisor.
-matriz_bloco_t **csubmatrizv2 (int mat_lin, int mat_col, int divisor);
-
-// recebe uma matriz de inteiros e a particiona em n (parâmetro divisor) pedaço de acordo com a orientação (horizontal ou vertical)
 matriz_bloco_t **particionar_matriz (int **matriz, int mat_lin, int mat_col, int orientacao, int divisor);
+matriz_bloco_t **csubmatrizv2 (int mat_lin, int mat_col, int divisor);
