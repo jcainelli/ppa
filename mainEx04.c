@@ -1,3 +1,5 @@
+#include <pthread.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,6 +7,12 @@
 #include "matrizv3.h"
 #include "matriz-operacoesv3.h"
 #include "matriz-operacoes-threads.h"
+
+// Variavies Globais Multi Thereads 
+mymatriz mat_a, mat_b;
+mymatriz *mat_mult;
+int num_thrd = 2;   // number of threads
+
 
 float tempoMedioExecutacao(int nr_execucoes, float *tempos){
 	float soma = 0;
@@ -16,12 +24,23 @@ float tempoMedioExecutacao(int nr_execucoes, float *tempos){
 }
 
 
+int *multiplicarThMain(void* pNr_thread)
+{
+  int nr_thread = (int)pNr_thread;   // retrive the slice info
+
+  printf("Thread : %d\n", nr_thread);
+
+  multiplicarTh(&mat_a, &mat_b, &mat_mult, nr_thread);
+
+  return 0;
+}
+
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 int main(int argc, char *argv[]) {
 
 	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
-	// DECLARAÇÃO de VARIÁVEIS
-	mymatriz mat_a, mat_b;
+
+	// DECLARAÇÃO de VARIÁVEIS	
 	mymatriz **mmultbloco, **mmult;
 	char filename[100];
 	FILE *fmat;
@@ -35,7 +54,10 @@ int main(int argc, char *argv[]) {
 	float tempos_sequencial [10];
 	float tempos_bloco [10];
 
+	// Agrupador de Threads
+	pthread_t* thread;  
 
+	// Matrizes
 	matriz_bloco_t **Vsubmat_a = NULL;
 	matriz_bloco_t **Vsubmat_b = NULL;
 	matriz_bloco_t **Vsubmat_c = NULL;
@@ -107,10 +129,37 @@ int main(int argc, char *argv[]) {
 	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
 
 	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
+	//               Operações de Multiplicação - Threads
+	
+	thread = (pthread_t*) malloc(num_thrd*sizeof(pthread_t));
+	
+	mat_mult = (mymatriz*) malloc(sizeof(mymatriz));    
+	mat_mult->matriz = NULL;
+    mat_mult->lin = mat_a.lin;
+    mat_mult->col = mat_b.col;
+	mat_mult->matriz = (int **) malloc(mat_a.lin*sizeof(int*));
+
+	for (int i = 0; i < num_thrd; i++){
+		if (pthread_create (&thread[i], NULL, multiplicarThMain, (void*)i) != 0 ){
+			perror("Erro na criação da Thread");
+			free(thread);
+			exit(-1);
+		}
+	}
+
+	// Junção das Threads
+	for (int i = 1; i < num_thrd; i++){
+ 		pthread_join (thread[i], NULL);
+	}
+
+
+	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
+
+	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
 	//               Operações de Multiplicação (em bloco)
 	mmultbloco = (mymatriz **) malloc (sizeof(mymatriz *));
 	for(int i = 0; i < numero_testes; i++){
-		printf("\n ##### multiplicar_t%d de Matrizes - MULTIPLICACAO <por bloco> #####\n", i);
+		//printf("\n ##### multiplicar_t%d de Matrizes - MULTIPLICACAO <por bloco> #####\n", i);
 		start_time = wtime();
 
 		Vsubmat_a = particionar_matriz (mat_a.matriz, N, La, 1, 2);
@@ -171,6 +220,7 @@ int main(int argc, char *argv[]) {
 	mliberar(&mat_b);
 	free(mmult);
 	free(mmultbloco);
+	free(thread);
 	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
 
 	return 0;

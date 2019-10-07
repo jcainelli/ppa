@@ -3,3 +3,5 @@
 
 // Implementar
  //multiplicarTh (...) e multiplicarThblocos (...). 
+
+ void *multiplicarTh (mymatriz *mat_a, mymatriz *mat_b, mymatriz *mat_c, int porcao_particao);
