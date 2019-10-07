@@ -45,12 +45,12 @@ mymatriz *mmultiplicar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
     mymatriz *mat_mult;
   
     if (mat_a == NULL || mat_b == NULL) {
-       printf("ERRO (MMULTIPLICAR) - Matriz A e/ou Matriz B invalida(s) - nula.\n");
-       return NULL;
+      printf("ERRO (MMULTIPLICAR) - Matriz A e/ou Matriz B invalida(s) - nula.\n");
+      return NULL;
     }
-     if (mat_a->col != mat_b->lin) {
-       printf("ERRO (MMULTIPLICAR) - Para multiplicar o numero de colunas da Matriz A e o numero de linhas da Matriz B devem ser iguais.\n");
-       return NULL;
+    if (mat_a->col != mat_b->lin) {
+      printf("ERRO (MMULTIPLICAR) - Para multiplicar o numero de colunas da Matriz A e o numero de linhas da Matriz B devem ser iguais.\n");
+      return NULL;
     }
 
     mat_mult = (mymatriz*) malloc(sizeof(mymatriz));
@@ -59,10 +59,10 @@ mymatriz *mmultiplicar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
     mat_mult->col = mat_b->col; 
 
     if (malocar(mat_mult)) {
-		printf ("ERRO (MMULTIPLICAR) - Erro ao alocar matriz Multiplica\n");
-        return NULL;
-	}
-	mzerar(mat_mult);
+      printf ("ERRO (MMULTIPLICAR) - Erro ao alocar matriz Multiplica\n");
+      return NULL;
+    }
+    mzerar(mat_mult);
 
     if (tipo == 0) {    //IJK
         for(int i = 0; i < mat_a->lin; i++){          
@@ -122,22 +122,6 @@ mymatriz *mmultiplicar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
 }
 
 int mmsubmatriz (matriz_bloco_t *mat_suba, matriz_bloco_t *mat_subb, matriz_bloco_t *mat_subc) {
-  /*
-  printf("\nSUBMAT A - Numero de Linhas : %d", mat_suba->matriz->lin );
-  printf("\nSUBMAT A - Numero de Colunas: %d", mat_suba->matriz->col );
-  printf("\nSUBMAT A - Linha Inicio     : %d", mat_suba->bloco->lin_inicio );
-  printf("\nSUBMAT A - Linha Fim        : %d", mat_suba->bloco->lin_fim );
-  printf("\nSUBMAT A - Coluna Inicio    : %d", mat_suba->bloco->col_inicio );
-  printf("\nSUBMAT A - Coluna Fim       : %d", mat_suba->bloco->col_fim);
-
-  printf("\nSUBMAT B - Numero de Linhas : %d", mat_subb->matriz->lin );
-  printf("\nSUBMAT B - Numero de Colunas: %d", mat_subb->matriz->col );
-  printf("\nSUBMAT B - Linha Inicio     : %d", mat_subb->bloco->lin_inicio );
-  printf("\nSUBMAT B - Linha Fim        : %d", mat_subb->bloco->lin_fim );
-  printf("\nSUBMAT B - Coluna Inicio    : %d", mat_subb->bloco->col_inicio );
-  printf("\nSUBMAT B - Coluna Fim       : %d", mat_subb->bloco->col_fim);
-  */
-
   if(!mat_suba || !mat_subb || !mat_subc){
 		printf("ERRO (MMSUBMATRIZ) - Matriz(es) invalida(s) ou nula(s).\n");
 		exit(1);
