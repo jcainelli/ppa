@@ -10,10 +10,8 @@ int malocar(mymatriz *mat) {
     }
     if (mat == NULL) {
         printf("ERRO (MALOCAR) - Sem memoria\n");
-        //Retorno FALSE porem esta invertido porque na chamada do malocar o prof nao colocou !
         return 1;
     }
-    //Retorno TRUE porem esta invertido porque na chamada do malocar o prof nao colocou !
     return 0;
 }
 
@@ -88,6 +86,9 @@ int mcomparar(mymatriz *matriza, mymatriz *matrizb){
 
    if (matriza->lin != matrizb->lin || matriza->col != matrizb->col) {
        printf("A Matriz A e Matriz B divergem no numero de linhas e colunas.");
+
+        printf("Print %d - %d - %d  %d \n",matriza->lin, matrizb->lin,matriza->col,matrizb->col);
+
        return 0;
     }
 
@@ -100,5 +101,6 @@ int mcomparar(mymatriz *matriza, mymatriz *matrizb){
 		}
 	}
 	printf("Matrizes identicas");
+
     return 1;
 }

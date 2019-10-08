@@ -8,10 +8,11 @@
 #include "matriz-operacoesv3.h"
 #include "matriz-operacoes-threads.h"
 
-// Variavies Globais Multi Thereads 
+// Variavies Globais Multi Threads 
 mymatriz mat_a, mat_b;
-mymatriz *mat_mult;
-int num_thrd = 2;   // number of threads
+mymatriz mat_mult;
+
+int num_thrd = 2;   // Sendo Mestre
 
 
 float tempoMedioExecutacao(int nr_execucoes, float *tempos){
@@ -115,7 +116,7 @@ int main(int argc, char *argv[]) {
 	for(int i = 0; i < numero_testes; i++){
 		printf("\n ##### multiplicar_t%d de Matrizes #####\n", i);
 		start_time = wtime();
-		mmult[0] = mmultiplicar(&mat_a, &mat_b, 1);
+		mmult[0] = mmultiplicar(&mat_a, &mat_b, 0);
 		end_time = wtime();
 
 		//printf("\tRuntime: %f\n", end_time - start_time);
@@ -133,11 +134,15 @@ int main(int argc, char *argv[]) {
 	
 	thread = (pthread_t*) malloc(num_thrd*sizeof(pthread_t));
 	
-	mat_mult = (mymatriz*) malloc(sizeof(mymatriz));    
-	mat_mult->matriz = NULL;
-    mat_mult->lin = mat_a.lin;
-    mat_mult->col = mat_b.col;
-	mat_mult->matriz = (int **) malloc(mat_a.lin*sizeof(int*));
+	//mat_mult = (mymatriz*) malloc(sizeof(mymatriz));    
+	mat_mult.matriz = NULL;
+    mat_mult.lin = mat_a.lin;
+    mat_mult.col = mat_b.col;
+
+	if (malocar(&mat_mult)){
+		printf ("ERRO (MSOMAR) - Erro ao alocar matriz Soma\n");
+		return NULL;
+	}
 
 	for (int i = 0; i < num_thrd; i++){
 		if (pthread_create (&thread[i], NULL, multiplicarThMain, (void*)i) != 0 ){
@@ -148,7 +153,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	// Junção das Threads
-	for (int i = 1; i < num_thrd; i++){
+	for (int i = 0; i < num_thrd; i++){
  		pthread_join (thread[i], NULL);
 	}
 
@@ -187,6 +192,10 @@ int main(int argc, char *argv[]) {
 	printf("\n ##### Comparação dos resultados da Multiplicação de matrizes #####\n");
 	printf("Comparação Matriz Sequencia X Matriz Bloco : ");
 	mcomparar(mmult[0], mmultbloco[0]);
+	printf("\n");
+
+	printf("Comparação Matriz Sequencia X Thread : ");
+	mcomparar(mmult[0], &mat_mult);
 	printf("\n");
 
 	printf("Tempo médio Sequencial: %f \n" , tempoMedioExecutacao(numero_testes, tempos_sequencial));

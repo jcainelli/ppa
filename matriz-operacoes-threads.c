@@ -2,7 +2,6 @@
 #include "matriz-operacoes-threads.h"
 
 int calculaParticaoCorte (int valor, int porcao_particao){
-    printf("##### calculaParticaoCorte\n");
     if (valor % 2){
         return valor / 2;
     }else{
@@ -15,9 +14,6 @@ int calculaParticaoCorte (int valor, int porcao_particao){
 }
 
 void *multiplicarTh (mymatriz *mat_a, mymatriz *mat_b, mymatriz *mat_c, int porcao_particao){
-    printf("### DENTRO DA multiplicarTh\n\n");
-    printf("### Mat (a) linha : %d \n", mat_a->lin);
-    printf("### Quarto : %d \n", porcao_particao);
 
     int lin_inic_a, lin_fim_a, col_inic_a, col_fim_a, col_inic_b, col_fim_b = 0;
 
@@ -39,6 +35,7 @@ void *multiplicarTh (mymatriz *mat_a, mymatriz *mat_b, mymatriz *mat_c, int porc
         col_fim_b = mat_b->col;
     }
 
+    printf("\nporcao_particao : %d\n", porcao_particao);
     printf("lin_inic_a : %d\n", lin_inic_a);
     printf("lin_fim_a  : %d\n", lin_fim_a);
     printf("col_inic_a : %d\n", col_inic_a);
@@ -48,17 +45,24 @@ void *multiplicarTh (mymatriz *mat_a, mymatriz *mat_b, mymatriz *mat_c, int porc
     printf("mat_c->lin : %d\n", mat_c->lin);
     printf("mat_c->cols : %d\n", mat_c->col);
 
-    printf("multiplicarTh - 1");
-    for(int i = lin_inic_a; i < lin_fim_a; i++){                  
+    mzerar(mat_c);
+
+    for(int i = lin_inic_a; i < lin_fim_a; i++){
         for(int j = col_inic_b; j < col_fim_b; j++){
             for(int k = col_inic_a; k < col_fim_a; k++){
-                //printf("x: %d .y: %d .z:%d", i, j, k);
-                printf(", (%d * %d)",mat_a->matriz[i][k], mat_b->matriz[k][j] );
-                //mat_c->matriz[i][j] += mat_a->matriz[i][k] * mat_b->matriz[k][j];
-                mat_c->matriz[i][j] = 0;
+                mat_c->matriz[i][j] += mat_a->matriz[i][k] * mat_b->matriz[k][j];
             }
         }
     }
-    printf("multiplicarTh - 2");
 
+
+/*
+    for(int i = 0; i < mat_a->lin; i++){          
+        for(int j = 0; j < mat_b->col; j++){
+            for(int k = 0; k < mat_a->col; k++){
+                mat_c->matriz[i][j] += mat_a->matriz[i][k] * mat_b->matriz[k][j];
+            }
+        }
+    }
+*/
 }

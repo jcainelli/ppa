@@ -8,34 +8,35 @@ mymatriz *msomar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
        printf("ERRO (MSOMAR) - Matriz A e/ou Matriz B invalida(s) - nula.\n");
        return NULL;
     }
-   if (mat_a->lin != mat_b->lin || mat_a->col != mat_b->col) {
+    if (mat_a->lin != mat_b->lin || mat_a->col != mat_b->col) {
        printf("ERRO (MSOMAR) - Para somar a Matriz A e  a Matriz B precisam ter o mesmo numero de linhas e colunas.\n");
        return NULL;
     }
-   mat_soma = (mymatriz*) malloc(sizeof(mymatriz));
-   mat_soma->matriz = NULL;
-   mat_soma->lin = mat_a->lin;
-   mat_soma->col = mat_a->col;
 
-   if (malocar(mat_soma)) {
-		printf ("ERRO (MSOMAR) - Erro ao alocar matriz Soma\n");
-        return NULL;
-	}
-	mzerar(mat_soma);
+    mat_soma = (mymatriz*) malloc(sizeof(mymatriz));
+    mat_soma->matriz = NULL;
+    mat_soma->lin = mat_a->lin;
+    mat_soma->col = mat_a->col;
+
+    if (malocar(mat_soma)) {
+      printf ("ERRO (MSOMAR) - Erro ao alocar matriz Soma\n");
+      return NULL;
+    }
+
+	  mzerar(mat_soma);
 
     if (tipo == 0) {    //IJ
-        for (int i=0; i < mat_a->lin; i++) {
-            for (int j=0; j < mat_a->col; j++){
-                mat_soma->matriz[i][j] = mat_a->matriz[i][j] + mat_b->matriz[i][j];
-            }
-        }
-    }
-    else if (tipo == 1){    //JI
+      for (int i=0; i < mat_a->lin; i++) {
         for (int j=0; j < mat_a->col; j++){
-            for (int i=0; i < mat_a->lin; i++) {
-                mat_soma->matriz[i][j] = mat_a->matriz[i][j] + mat_b->matriz[i][j];
-            }
+            mat_soma->matriz[i][j] = mat_a->matriz[i][j] + mat_b->matriz[i][j];
         }
+      }
+    }else if (tipo == 1){    //JI
+      for (int j=0; j < mat_a->col; j++){
+        for (int i=0; i < mat_a->lin; i++) {
+            mat_soma->matriz[i][j] = mat_a->matriz[i][j] + mat_b->matriz[i][j];
+        }
+      }
     }
     return mat_soma;
 }
@@ -74,7 +75,7 @@ mymatriz *mmultiplicar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
         }
     }
     else if (tipo == 1) {   //IKJ
-        for(int i = 0; i < mat_a->lin; i++){
+      for(int i = 0; i < mat_a->lin; i++){
 		    for(int k = 0; k < mat_a->col; k++){
 			    for(int j = 0; j < mat_b->col; j++){
 				    mat_mult->matriz[i][j] += mat_a->matriz[i][k] * mat_b->matriz[k][j];
@@ -167,7 +168,7 @@ matriz_bloco_t **particionar_matriz(int **matriz, int mat_lin, int mat_col, int 
   newMatriz->lin = mat_lin;
   newMatriz->col = mat_col;
 
-   if(orientacao == 0){ //vertical
+  if(orientacao == 0){ //vertical
     int desloc = mat_lin/divisor;
     for(int i=0; i<divisor; i++){
       block[i]->matriz = newMatriz;
@@ -179,7 +180,6 @@ matriz_bloco_t **particionar_matriz(int **matriz, int mat_lin, int mat_col, int 
       block[i]->bloco->col_fim = mat_col;
     }
     block[divisor-1]->bloco->lin_fim = mat_lin;
-
   } else { //horizontal
     int desloc = mat_col/divisor;
     for(int i=0; i<divisor; i++){
@@ -192,7 +192,6 @@ matriz_bloco_t **particionar_matriz(int **matriz, int mat_lin, int mat_col, int 
       block[i]->bloco->col_fim = (i+1) * desloc;    
     }
     block[divisor-1]->bloco->col_fim = mat_col;
-
   }    
   return block;
 }
