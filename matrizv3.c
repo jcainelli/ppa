@@ -86,16 +86,13 @@ int mcomparar(mymatriz *matriza, mymatriz *matrizb){
 
    if (matriza->lin != matrizb->lin || matriza->col != matrizb->col) {
        printf("A Matriz A e Matriz B divergem no numero de linhas e colunas.");
-
-        printf("Print %d - %d - %d  %d \n",matriza->lin, matrizb->lin,matriza->col,matrizb->col);
-
        return 0;
     }
 
 	for (int i=0; i < matriza->lin; i++) {
 	  for (int j=0; j < matriza->col; j++){
 			if (matriza->matriz[i][j] != matrizb->matriz[i][j]) {
-				printf("O elemento [%d,%d] eh diferente nas matrizes: %d != %d", i,j,matriza->matriz[i][j], matrizb->matriz[i][j]);
+				printf("# O elemento [%d,%d] eh diferente nas matrizes: %d != %d ", i,j,matriza->matriz[i][j], matrizb->matriz[i][j]);
 				return 0;
 			}
 		}

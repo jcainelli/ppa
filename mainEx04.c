@@ -12,7 +12,7 @@
 mymatriz mat_a, mat_b;
 mymatriz mat_mult;
 
-int num_thrd = 2;   // Sendo Mestre
+int num_thrd = 3;   // Sendo Mestre
 
 
 float tempoMedioExecutacao(int nr_execucoes, float *tempos){
@@ -27,13 +27,13 @@ float tempoMedioExecutacao(int nr_execucoes, float *tempos){
 
 int *multiplicarThMain(void* pNr_thread)
 {
-  int nr_thread = (int)pNr_thread;   // retrive the slice info
+  	int nr_thread = (int)pNr_thread;   // retrive the slice info
 
-  printf("Thread : %d\n", nr_thread);
+	if (nr_thread > 0){
+		multiplicarTh(&mat_a, &mat_b, &mat_mult, nr_thread);
+	}
 
-  multiplicarTh(&mat_a, &mat_b, &mat_mult, nr_thread);
-
-  return 0;
+	return 0;
 }
 
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -53,6 +53,7 @@ int main(int argc, char *argv[]) {
 	// Variaveis de tempo
 	int numero_testes = 10;
 	float tempos_sequencial [10];
+	float tempo_thread;
 	float tempos_bloco [10];
 
 	// Agrupador de Threads
@@ -131,10 +132,9 @@ int main(int argc, char *argv[]) {
 
 	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
 	//               Operações de Multiplicação - Threads
+
 	
 	thread = (pthread_t*) malloc(num_thrd*sizeof(pthread_t));
-	
-	//mat_mult = (mymatriz*) malloc(sizeof(mymatriz));    
 	mat_mult.matriz = NULL;
     mat_mult.lin = mat_a.lin;
     mat_mult.col = mat_b.col;
@@ -144,7 +144,10 @@ int main(int argc, char *argv[]) {
 		return NULL;
 	}
 
-	for (int i = 0; i < num_thrd; i++){
+	mzerar(&mat_mult);
+	
+	start_time = wtime();
+	for (int i = 1; i < num_thrd; i++){
 		if (pthread_create (&thread[i], NULL, multiplicarThMain, (void*)i) != 0 ){
 			perror("Erro na criação da Thread");
 			free(thread);
@@ -153,11 +156,11 @@ int main(int argc, char *argv[]) {
 	}
 
 	// Junção das Threads
-	for (int i = 0; i < num_thrd; i++){
+	for (int i = 1; i < num_thrd; i++){
  		pthread_join (thread[i], NULL);
 	}
-
-
+	end_time = wtime();
+	tempo_thread = (end_time - start_time) / numero_testes;
 	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
 
 	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
@@ -199,6 +202,7 @@ int main(int argc, char *argv[]) {
 	printf("\n");
 
 	printf("Tempo médio Sequencial: %f \n" , tempoMedioExecutacao(numero_testes, tempos_sequencial));
+	printf("Tempo médio Threads   : %f \n" , tempo_thread);
 	printf("Tempo médio Blocos    : %f \n" , tempoMedioExecutacao(numero_testes, tempos_bloco));
 /*
 	(print) COMPARAR MATRIZ_SeqC c/ MATRIZ_SeqBlC
