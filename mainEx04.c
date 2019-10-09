@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
 	// Variaveis de tempo
 	int numero_testes = 10;
 	float tempos_sequencial [10];
-	float tempo_thread;
+	float tempo_thread [10];
 	float tempos_bloco [10];
 
 	// Agrupador de Threads
@@ -132,7 +132,6 @@ int main(int argc, char *argv[]) {
 
 	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
 	//               Operações de Multiplicação - Threads
-
 	
 	thread = (pthread_t*) malloc(num_thrd*sizeof(pthread_t));
 	mat_mult.matriz = NULL;
@@ -144,23 +143,31 @@ int main(int argc, char *argv[]) {
 		return NULL;
 	}
 
-	mzerar(&mat_mult);
-	
-	start_time = wtime();
-	for (int i = 1; i < num_thrd; i++){
-		if (pthread_create (&thread[i], NULL, multiplicarThMain, (void*)i) != 0 ){
-			perror("Erro na criação da Thread");
-			free(thread);
-			exit(-1);
-		}
-	}
+	for(int i = 0; i < numero_testes; i++){
+		printf("\n ##### multiplicar_t%d de Matrizes - Threads #####\n", i);
 
-	// Junção das Threads
-	for (int i = 1; i < num_thrd; i++){
- 		pthread_join (thread[i], NULL);
+		mzerar(&mat_mult);
+		
+		start_time = wtime();
+		for (int i = 1; i < num_thrd; i++){
+			if (pthread_create (&thread[i], NULL, multiplicarThMain, (void*)i) != 0 ){
+				perror("Erro na criação da Thread");
+				free(thread);
+				exit(-1);
+			}
+		}
+
+		// Junção das Threads
+		for (int i = 1; i < num_thrd; i++){
+			pthread_join (thread[i], NULL);
+		}
+
+		end_time = wtime();
+
+		tempo_thread[i] = (end_time - start_time);
 	}
-	end_time = wtime();
-	tempo_thread = (end_time - start_time) / numero_testes;
+		
+
 	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
 
 	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
@@ -202,8 +209,10 @@ int main(int argc, char *argv[]) {
 	printf("\n");
 
 	printf("Tempo médio Sequencial: %f \n" , tempoMedioExecutacao(numero_testes, tempos_sequencial));
-	printf("Tempo médio Threads   : %f \n" , tempo_thread);
+	printf("Tempo médio Threads   : %f \n" , tempoMedioExecutacao(numero_testes, tempo_thread));
 	printf("Tempo médio Blocos    : %f \n" , tempoMedioExecutacao(numero_testes, tempos_bloco));
+
+	printf("Speed-Up Thread       : %f \n" , (tempoMedioExecutacao(numero_testes, tempos_sequencial) / tempoMedioExecutacao(numero_testes, tempo_thread)));
 /*
 	(print) COMPARAR MATRIZ_SeqC c/ MATRIZ_SeqBlC
 	(print) COMPARAR MATRIZ_SeqC c/ MATRIZ_ThreadC
@@ -231,6 +240,7 @@ int main(int argc, char *argv[]) {
 
 	mliberar(&mat_a);
 	mliberar(&mat_b);
+	mliberar(&mat_mult);
 	free(mmult);
 	free(mmultbloco);
 	free(thread);
