@@ -131,8 +131,7 @@ int main(int argc, char *argv[]) {
 	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
 
 	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
-	//               Operações de Multiplicação - Threads
-	
+	//               Operações de Multiplicação - Threads	
 	thread = (pthread_t*) malloc(num_thrd*sizeof(pthread_t));
 	mat_mult.matriz = NULL;
     mat_mult.lin = mat_a.lin;
@@ -174,7 +173,7 @@ int main(int argc, char *argv[]) {
 	//               Operações de Multiplicação (em bloco)
 	mmultbloco = (mymatriz **) malloc (sizeof(mymatriz *));
 	for(int i = 0; i < numero_testes; i++){
-		//printf("\n ##### multiplicar_t%d de Matrizes - MULTIPLICACAO <por bloco> #####\n", i);
+		printf("\n ##### multiplicar_t%d de Matrizes - MULTIPLICACAO <por bloco> #####\n", i);
 		start_time = wtime();
 
 		Vsubmat_a = particionar_matriz (mat_a.matriz, N, La, 1, 2);
@@ -187,7 +186,6 @@ int main(int argc, char *argv[]) {
 
 		end_time = wtime();	
 
-		//printf("\tRuntime: %f\n", end_time - start_time);
 		tempos_bloco[i] = (end_time - start_time);
 
 		sprintf(filename, "mult_t1.result");

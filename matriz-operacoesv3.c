@@ -73,8 +73,7 @@ mymatriz *mmultiplicar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
                 }
             }
         }
-    }
-    else if (tipo == 1) {   //IKJ
+    }else if (tipo == 1) {   //IKJ
       for(int i = 0; i < mat_a->lin; i++){
 		    for(int k = 0; k < mat_a->col; k++){
 			    for(int j = 0; j < mat_b->col; j++){
@@ -82,8 +81,7 @@ mymatriz *mmultiplicar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
 			    }
 		    }
 	    }
-    }
-    else if (tipo == 2) {   //KIJ
+    }else if (tipo == 2) {   //KIJ
         for(int k = 0; k < mat_a->col; k++){
             for(int i = 0; i < mat_a->lin; i++){
                 for(int j = 0; j < mat_b->col; j++){
@@ -91,8 +89,7 @@ mymatriz *mmultiplicar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
                 }
             }
         }
-    }
-    else if (tipo == 3) {   //KJI
+    }else if (tipo == 3) {   //KJI
         for(int k = 0; k < mat_a->col; k++){
             for(int j = 0; j < mat_b->col; j++){
                 for(int i = 0; i < mat_a->lin; i++){
@@ -100,8 +97,7 @@ mymatriz *mmultiplicar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
                 }
             }
         }
-    }
-    else if (tipo == 4) {   //JIK
+    }else if (tipo == 4) {   //JIK
         for(int j = 0; j < mat_b->col; j++){
 		    for(int i = 0; i < mat_a->lin; i++){
 			    for(int k = 0; k < mat_a->col; k++){
@@ -109,8 +105,7 @@ mymatriz *mmultiplicar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
                 }
             }
         }
-    }
-    else if (tipo == 5) {   //JKI
+    }else if (tipo == 5) {   //JKI
         for(int j = 0; j < mat_b->col; j++){
             for(int k = 0; k < mat_a->col; k++){
                 for(int i = 0; i < mat_a->lin; i++){
@@ -124,9 +119,9 @@ mymatriz *mmultiplicar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
 
 int mmsubmatriz (matriz_bloco_t *mat_suba, matriz_bloco_t *mat_subb, matriz_bloco_t *mat_subc) {
   if(!mat_suba || !mat_subb || !mat_subc){
-		printf("ERRO (MMSUBMATRIZ) - Matriz(es) invalida(s) ou nula(s).\n");
-		exit(1);
-	}
+    printf("ERRO (MMSUBMATRIZ) - Matriz(es) invalida(s) ou nula(s).\n");
+    exit(1);
+  }
   
   if(mat_suba->matriz->col != mat_subb->matriz->lin){
     printf("ERRO (MMSUBMATRIZ) - Numero de colunas da Matriz A eh diferente do Numero de linhas da Matriz B. Multiplicacao nao eh possivel.");
