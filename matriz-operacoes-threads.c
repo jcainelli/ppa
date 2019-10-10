@@ -33,4 +33,11 @@ void *multiplicarTh (mymatriz *mat_a, mymatriz *mat_b, mymatriz *mat_c, int porc
 void *multiplicarThblocos (matriz_bloco_t *mat_suba, matriz_bloco_t *mat_subb, matriz_bloco_t *mat_subc){
     printf("## multiplicarThblocos \n");
     mmsubmatriz(mat_suba, mat_subb, mat_subc);
+    printf(
+        "%d - ", mat_suba->bloco->col_fim, 
+        "%d - ", mat_subb->bloco->col_fim,
+        "%d - ", mat_suba->matriz->matriz[0][0],
+    "\n"
+    );
+
 }

@@ -176,6 +176,12 @@ int main(int argc, char *argv[]) {
 		end_time = wtime();
 
 		tempo_thread[i] = (end_time - start_time);
+
+		
+		sprintf(filename, "mult_t1_thread.result");
+		fmat = fopen(filename,"w");
+		fileout_matriz(&mat_mult, fmat);
+		fclose(fmat);		
 	}
 		
 
@@ -200,7 +206,7 @@ int main(int argc, char *argv[]) {
 
 		tempos_bloco[i] = (end_time - start_time);
 
-		sprintf(filename, "mult_t1.result");
+		sprintf(filename, "mult_t1_bloco.result");
 		fmat = fopen(filename,"w");
 		fileout_matriz(mmultbloco[0], fmat);
 		fclose(fmat);
@@ -216,6 +222,12 @@ int main(int argc, char *argv[]) {
 		
 
 		start_time = wtime();
+
+		Vsubmat_a = particionar_matriz (mat_a.matriz, N, La, 1, 2);
+		Vsubmat_b = particionar_matriz (mat_b.matriz, Lb, M, 0, 2);
+		Vsubmat_c = csubmatrizv2 (N, M, nro_submatrizes);
+
+
 		for (int i = 1; i < num_thrd; i++){
 			if (pthread_create (&thread[i], NULL, multiplicarThblocosMain, (void*)i) != 0 ){
 				perror("Erro na criação da Thread Multi Blocos");
@@ -235,34 +247,12 @@ int main(int argc, char *argv[]) {
 
 		tempos_bloco_thread[i] = (end_time - start_time);
 		
-		sprintf(filename, "mult_t1_bloco.result");
+		sprintf(filename, "mult_t1_bloco_thread.result");
 		fmat = fopen(filename,"w");
-		fileout_matriz(mmultbloco[0], fmat);
+		fileout_matriz(mmultiblocothread[0], fmat);
 		fclose(fmat);
-
-
-
-		/*Vsubmat_a = particionar_matriz (mat_a.matriz, N, La, 1, 2);
-		Vsubmat_b = particionar_matriz (mat_b.matriz, Lb, M, 0, 2);
-		Vsubmat_c = csubmatrizv2 (N, M, nro_submatrizes);
-
-		mmsubmatriz (Vsubmat_a[0], Vsubmat_b[0], Vsubmat_c[0]);
-		mmsubmatriz (Vsubmat_a[1], Vsubmat_b[1], Vsubmat_c[1]); 
-		mmultiblocothread[0] = msomar(Vsubmat_c[0]->matriz, Vsubmat_c[1]->matriz, 1);
-
-		end_time = wtime();	
-
-		tempos_bloco[i] = (end_time - start_time);
-
-		sprintf(filename, "mult_t1.result");
-		fmat = fopen(filename,"w");
-		fileout_matriz(mmultbloco[0], fmat);
-		fclose(fmat);*/
 	}
 	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
 
 
 	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
@@ -280,30 +270,13 @@ int main(int argc, char *argv[]) {
 	mcomparar(mmult[0], mmultiblocothread[0]);
 	printf("\n");
 
-
-	printf("Tempo médio Sequencial     : %f \n" , tempoMedioExecutacao(numero_testes, tempos_sequencial));
-	printf("Tempo médio Threads        : %f \n" , tempoMedioExecutacao(numero_testes, tempo_thread));
-	printf("Tempo médio Blocos         : %f \n" , tempoMedioExecutacao(numero_testes, tempos_bloco));
-	printf("Tempo médio Blocos Threads : %f \n" , tempoMedioExecutacao(numero_testes, tempos_bloco_thread));
+	printf("Tempo médio Sequencial        : %f \n" , tempoMedioExecutacao(numero_testes, tempos_sequencial));
+	printf("Tempo médio Sequencial Blocos : %f \n" , tempoMedioExecutacao(numero_testes, tempos_bloco));
+	printf("Tempo médio Threads           : %f \n" , tempoMedioExecutacao(numero_testes, tempo_thread));
+	printf("Tempo médio Threads Blocos    : %f \n" , tempoMedioExecutacao(numero_testes, tempos_bloco_thread));
 
 	printf("Speed-Up Thread            : %f \n" , (tempoMedioExecutacao(numero_testes, tempos_sequencial) / tempoMedioExecutacao(numero_testes, tempo_thread)));
 	printf("Speed-Up Blocos Thread     : %f \n" , (tempoMedioExecutacao(numero_testes, tempos_sequencial) / tempoMedioExecutacao(numero_testes, tempos_bloco_thread)));
-/*
-	(print) COMPARAR MATRIZ_SeqC c/ MATRIZ_SeqBlC
-	(print) COMPARAR MATRIZ_SeqC c/ MATRIZ_ThreadC
-	(print) COMPARAR MATRIZ_SeqC c/ MATRIZ_ThreadBlC
-	
-	(print) TEMPO_MEDIO MATRIZ_SeqC 
-	(print) TEMPO_MEDIO MATRIZ_SeqBlC
-	(print) TEMPO_MEDIO MATRIZ_ThreadC
-	(print) TEMPO_MEDIO MATRIZ_ThreadBlC
-	(print) SPEEDUP (MATRIZ_C)
-	(print) SPEEDUP (MATRIZ_BLC)
-
-*/
-
-	//printf("[mult_t0 vs multbloco_t0]\t");
-	//mcomparar (mmult[0],mmultbloco[0]);
 	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
 
 	// %%%%%%%%%%%%%%%%%%%%%%%% BEGIN %%%%%%%%%%%%%%%%%%%%%%%%
@@ -312,6 +285,8 @@ int main(int argc, char *argv[]) {
 	free (mmult[0]);
 	mliberar(mmultbloco[0]);
 	free (mmultbloco[0]);
+	mliberar(mmultiblocothread[0]);
+	free(mmultiblocothread[0]);
 
 	mliberar(&mat_a);
 	mliberar(&mat_b);
