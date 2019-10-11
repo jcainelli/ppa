@@ -1,0 +1,34 @@
+###################################################
+### Disciplina de Programação Paralela Avançada ###
+###################################################
+Revisão: Outubro/2019
+Linguagem: C
+Versão: v3 (tools, matriz, matriz-operacoes, matriz-operacoes-threads)
+Executáveis: mainEx04 e gmat
+
+mainExe04: código principal de teste das funções
+gmat: gerador de matrizes NxM em arquivo
+
+Para compilar os programas será necessário:
+ * Acessar o diretório onde os fontes foram baixados. Neste diretório consta os arquivos fontes, bibliotecas e o arquivo MakeFile.
+ * Depois executar "make";
+ 
+Para executar os programas será necessário:
+ * Acessar o diretório onde os fontes foram baixados e compilados;
+ * ./gmat 3 4 (irá gerar um arquivo com 3 linhas e 4 colunas) e valores randomicos limitados a 100;
+ * ./gmat 4 3 (irá gerar um arquivo com 4 linhas e 3 colunas) e valores randomicos limitados a 100;
+ * ./mainEx04 a3x4.example b4x2.example
+ 
+
+ARQUIVOS:
+ * a3x4.example e b4x3.example - matrizes exemplo A (3x4) e B(4x3)
+ * toolsv3.(c/h): biblioteca de leitura/escrita de matrizes em arquivos
+ * matrizv3.h: headers das funcoes de gerencia de matrizes
+ * matrizv3.c: biblioteca de manipulacao de matrizes contendo as funcoes: malocar, mgerar, mimprimir, mzerar, mliberar e mcomparar
+ * matriz-operacoesv3.h: headers das funções de operações de matrizes: somar, particionar e multiplicar (simples e em bloco)
+ * matriz-operacoesv3.c: biblioteca de manipulacao de matrizes contendo as funcoes: somar, particionar e multiplicar (simples e em bloco)
+ * matriz-operacoes-threads.h: headers das funções de execução em threads
+ * matriz-operacoes-threads.c: biblioteca com as funções de execução em threads
+ * gera_matrizv3.c: fonte do programa de geração de matrizes em arquivo
+ * mainEx04.c: fonte do programa de teste das execuções sequencial e threads (multiplicacao e multiplicacao em blocos);
+ 

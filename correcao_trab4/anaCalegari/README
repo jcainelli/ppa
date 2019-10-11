@@ -1,0 +1,68 @@
+###################################################
+### Disciplina de Programação Paralela Avançada ###
+###################################################
+Revisão: ago/2019
+Linguagem: C
+Versão: v3 (tools, matriz, matriz operações e matriz operacoes threads)
+Executáveis: mainEx04 mainEx03a mainEx02 mainEx01 e gmat
+
+gmat......: gerador de matrizes NxM em arquivo
+mainEx01..: código principal de teste das funções 
+mainEx02..: código principal de teste das funções de SOMA e MULTIPLICAÇÂO de matrizes
+mainEx03a.: código principal de teste das funções de multiplicação em blocos de matrizes
+mainEx04..: código principal de teste das funções de multiplicação em blocos de matrizes em threads
+
+ARQUIVOS:
+
+ ------------------- Para a execução do exercício 4 - THREADS -------------------------------------
+ 
+ * Makefile: Esquema para realizar a compilação e gerar os arquivos executáveis mainEx04, mainEx03a, mainEx02, mainEx01 e gmat. 
+   PARA COMPILAR, executar console apenas: make
+
+ * Exercício 4 --> mainEx04: Para teste de multiplicação normal e de blocos de matriz, sequencialmente ou em threads. 
+   Executar no console a linha modelo abaixo, sendo que o XXXX.XXX representa o nome do arquivo que contenha a matriz. 
+   ./mainEx04 mat_a3x4.example mat_b4x3.example 2
+
+ * gmat: Para a geração de matriz com números randômicos. Executar no console a linha modelo abaixo, sendo que o número representa o tamanho das linha e colunas da matriz: 
+   ./gmat 9 9
+
+------------------- Demais arquivos do pacote - PACOTE GERAL TODOS OS EXERCÍCIOS -------------------------------------
+
+ * Exercício 1 --> mainEx01: Para teste da função de comparação da matriz. Executar no console a linha modelo abaixo, sendo que o XXXX.XXX representa o nome do arquivo que contenha a matriz. 
+   Obs.: Pode ser utilizado o gmat para a criação das matrizes a serem usadas na comparação.
+   ./mainEx01 XXXX.XXX XXXX.XXX
+
+ * Exercício 2 --> mainEx02: Para teste de soma e de multiplicação de matriz. Executar no console a linha modelo abaixo, sendo que o XXXX.XXX representa o nome do arquivo que contenha a matriz. 
+   Quando chamada a função msomar no mainExe02 considera somar o arquivo passado como primeiro parametro com ele mesmo. 
+   Quando chamada a função mmultiplicar mainExe02 considera multiplicar a matriz do arquivo passado como primeiro parametro (Matriz A) com a matriz do segundo parametro (matriz B). Sendo assim a as colunas da matriz A devem ser iguais as linhas da matriz B.. 
+   Obs.: Pode ser utilizado o gmat para a criação das matrizes a serem usadas na comparação.
+   ./mainEx02 XXXX.XXX XXXX.XXX
+
+* Exercício 3 --> mainEx03a: Para teste de multiplicação de blocos de matriz. Executar no console a linha modelo abaixo, sendo que o XXXX.XXX representa o nome do arquivo que contenha a matriz. 
+   Para a partição das matrizes a orientacao é "1" para horizontal e "0" para vertical.
+   A função considera sempre a partição da matriz em 2.
+   ./mainEx03a mat_a3x4.example mat_b4x3.example
+
+ * README-res: Resultado dos testes da execução do mainEx04;
+   Obs.: Foi utilizado o valgrind.
+
+ * toolsv3.(c/h): biblioteca de leitura/escrita de matrizes em arquivos;
+
+ * matrizv3.(c/h): biblioteca desenvolvida com as funções: malocar, mgerar, mimprimir, mzerar, mliberar e mcomparar;
+   Headers das funções de gerência de matrizes que devem ser implementadas;
+ 
+ * matriz-operacoesv3.(c/h): biblioteca desenvolvida com as funções: ssomar, mmultiplicar, mmsubmatriz, csubmatrizv2 e particionar_matriz;
+   Headers das funções de gerência de matrizes que devem ser implementadas;
+  
+ * matriz-operacoes-threads.(c/h): biblioteca desenvolvida com as funções: multiplicarTh e multiplicarThblocos;
+   Headers das funções de gerência de matrizes que devem ser implementadas;
+
+ * gera_matrizv3.c: fonte do programa de geração de matrizes em arquivo;
+
+ * mainEx01.c: fonte do programa de teste das operações de matrizes;
+
+ * mainEx02.c: fonte do programa de teste das operações de matrizes (soma e multiplicação);
+
+ * mainEx03a.c: fonte do programa de teste das operações de matrizes (multiplicação em bloco);
+
+ * mainEx04.c: fonte do programa de teste das operações de matrizes (multiplicação normal e em blocos) modo sequencial e threads;
