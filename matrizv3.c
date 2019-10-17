@@ -99,6 +99,6 @@ int mcomparar(mymatriz *matriza, mymatriz *matrizb){
 			}
 		}
 	}
-	printf("\tVERIFICADO (MCOMPARAR): Matrizes identicas\n\n");
+	printf("VERIFICADO (MCOMPARAR): Matrizes identicas\n");
     return 1;
 }
