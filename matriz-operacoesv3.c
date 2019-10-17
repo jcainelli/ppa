@@ -8,35 +8,34 @@ mymatriz *msomar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
        printf("ERRO (MSOMAR) - Matriz A e/ou Matriz B invalida(s) - nula.\n");
        return NULL;
     }
-    if (mat_a->lin != mat_b->lin || mat_a->col != mat_b->col) {
+   if (mat_a->lin != mat_b->lin || mat_a->col != mat_b->col) {
        printf("ERRO (MSOMAR) - Para somar a Matriz A e  a Matriz B precisam ter o mesmo numero de linhas e colunas.\n");
        return NULL;
     }
+   mat_soma = (mymatriz*) malloc(sizeof(mymatriz));
+   mat_soma->matriz = NULL;
+   mat_soma->lin = mat_a->lin;
+   mat_soma->col = mat_a->col;
 
-    mat_soma = (mymatriz*) malloc(sizeof(mymatriz));
-    mat_soma->matriz = NULL;
-    mat_soma->lin = mat_a->lin;
-    mat_soma->col = mat_a->col;
-
-    if (malocar(mat_soma)) {
-      printf ("ERRO (MSOMAR) - Erro ao alocar matriz Soma\n");
-      return NULL;
-    }
-
-	  mzerar(mat_soma);
+   if (malocar(mat_soma)) {
+		printf ("ERRO (MSOMAR) - Erro ao alocar matriz Soma\n");
+        return NULL;
+	}
+	mzerar(mat_soma);
 
     if (tipo == 0) {    //IJ
-      for (int i=0; i < mat_a->lin; i++) {
-        for (int j=0; j < mat_a->col; j++){
-            mat_soma->matriz[i][j] = mat_a->matriz[i][j] + mat_b->matriz[i][j];
-        }
-      }
-    }else if (tipo == 1){    //JI
-      for (int j=0; j < mat_a->col; j++){
         for (int i=0; i < mat_a->lin; i++) {
-            mat_soma->matriz[i][j] = mat_a->matriz[i][j] + mat_b->matriz[i][j];
+            for (int j=0; j < mat_a->col; j++){
+                mat_soma->matriz[i][j] = mat_a->matriz[i][j] + mat_b->matriz[i][j];
+            }
         }
-      }
+    }
+    else if (tipo == 1){    //JI
+        for (int j=0; j < mat_a->col; j++){
+            for (int i=0; i < mat_a->lin; i++) {
+                mat_soma->matriz[i][j] = mat_a->matriz[i][j] + mat_b->matriz[i][j];
+            }
+        }
     }
     return mat_soma;
 }
@@ -46,12 +45,12 @@ mymatriz *mmultiplicar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
     mymatriz *mat_mult;
   
     if (mat_a == NULL || mat_b == NULL) {
-      printf("ERRO (MMULTIPLICAR) - Matriz A e/ou Matriz B invalida(s) - nula.\n");
-      return NULL;
+       printf("ERRO (MMULTIPLICAR) - Matriz A e/ou Matriz B invalida(s) - nula.\n");
+       return NULL;
     }
-    if (mat_a->col != mat_b->lin) {
-      printf("ERRO (MMULTIPLICAR) - Para multiplicar o numero de colunas da Matriz A e o numero de linhas da Matriz B devem ser iguais.\n");
-      return NULL;
+     if (mat_a->col != mat_b->lin) {
+       printf("ERRO (MMULTIPLICAR) - Para multiplicar o numero de colunas da Matriz A e o numero de linhas da Matriz B devem ser iguais.\n");
+       return NULL;
     }
 
     mat_mult = (mymatriz*) malloc(sizeof(mymatriz));
@@ -60,10 +59,10 @@ mymatriz *mmultiplicar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
     mat_mult->col = mat_b->col; 
 
     if (malocar(mat_mult)) {
-      printf ("ERRO (MMULTIPLICAR) - Erro ao alocar matriz Multiplica\n");
-      return NULL;
-    }
-    mzerar(mat_mult);
+		printf ("ERRO (MMULTIPLICAR) - Erro ao alocar matriz Multiplica\n");
+        return NULL;
+	}
+	mzerar(mat_mult);
 
     if (tipo == 0) {    //IJK
         for(int i = 0; i < mat_a->lin; i++){          
@@ -73,15 +72,17 @@ mymatriz *mmultiplicar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
                 }
             }
         }
-    }else if (tipo == 1) {   //IKJ
-      for(int i = 0; i < mat_a->lin; i++){
+    }
+    else if (tipo == 1) {   //IKJ
+        for(int i = 0; i < mat_a->lin; i++){
 		    for(int k = 0; k < mat_a->col; k++){
 			    for(int j = 0; j < mat_b->col; j++){
 				    mat_mult->matriz[i][j] += mat_a->matriz[i][k] * mat_b->matriz[k][j];
 			    }
 		    }
 	    }
-    }else if (tipo == 2) {   //KIJ
+    }
+    else if (tipo == 2) {   //KIJ
         for(int k = 0; k < mat_a->col; k++){
             for(int i = 0; i < mat_a->lin; i++){
                 for(int j = 0; j < mat_b->col; j++){
@@ -89,7 +90,8 @@ mymatriz *mmultiplicar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
                 }
             }
         }
-    }else if (tipo == 3) {   //KJI
+    }
+    else if (tipo == 3) {   //KJI
         for(int k = 0; k < mat_a->col; k++){
             for(int j = 0; j < mat_b->col; j++){
                 for(int i = 0; i < mat_a->lin; i++){
@@ -97,7 +99,8 @@ mymatriz *mmultiplicar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
                 }
             }
         }
-    }else if (tipo == 4) {   //JIK
+    }
+    else if (tipo == 4) {   //JIK
         for(int j = 0; j < mat_b->col; j++){
 		    for(int i = 0; i < mat_a->lin; i++){
 			    for(int k = 0; k < mat_a->col; k++){
@@ -105,7 +108,8 @@ mymatriz *mmultiplicar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
                 }
             }
         }
-    }else if (tipo == 5) {   //JKI
+    }
+    else if (tipo == 5) {   //JKI
         for(int j = 0; j < mat_b->col; j++){
             for(int k = 0; k < mat_a->col; k++){
                 for(int i = 0; i < mat_a->lin; i++){
@@ -118,20 +122,33 @@ mymatriz *mmultiplicar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
 }
 
 int mmsubmatriz (matriz_bloco_t *mat_suba, matriz_bloco_t *mat_subb, matriz_bloco_t *mat_subc) {
-  if(!mat_suba || !mat_subb || !mat_subc){
-    printf("ERRO (MMSUBMATRIZ) - Matriz(es) invalida(s) ou nula(s).\n");
-    exit(1);
-  }
+  
+  if(mat_suba == NULL){
+		printf("\nERRO (MMSUBMATRIZ - A) - Matriz(es) invalida(s) ou nula(s).\n");
+		exit(1);
+	}
+  if(mat_subb == NULL){
+		printf("\nERRO (MMSUBMATRIZ - B) - Matriz(es) invalida(s) ou nula(s).\n");
+		exit(1);
+	}
+  if(mat_subc == NULL){
+		printf("\nERRO (MMSUBMATRIZ - C) - Matriz(es) invalida(s) ou nula(s).\n");
+		exit(1);
+	}
+  if((mat_suba == NULL) || (mat_subb == NULL) || (mat_subc == NULL)){
+		printf("\nERRO (MMSUBMATRIZ) - Matriz(es) invalida(s) ou nula(s).\n");
+		exit(1);
+	}
   
   if(mat_suba->matriz->col != mat_subb->matriz->lin){
-    printf("ERRO (MMSUBMATRIZ) - Numero de colunas da Matriz A eh diferente do Numero de linhas da Matriz B. Multiplicacao nao eh possivel.");
+    printf("\nERRO (MMSUBMATRIZ) - Numero de colunas da Matriz A eh diferente do Numero de linhas da Matriz B. Multiplicacao nao eh possivel.");
     exit(1);
   }
 
   for (int i = mat_suba->bloco->lin_inicio; i < mat_suba->bloco->lin_fim; i++) {
-    for (int k = mat_suba->bloco->col_inicio; k < mat_suba->bloco->col_fim; k++){
       for (int j = mat_subb->bloco->col_inicio; j < mat_subb->bloco->col_fim; j++) {
-        mat_subc->matriz->matriz[i][j] += mat_suba->matriz->matriz[i][k] * mat_subb->matriz->matriz[k][j];
+        for (int k = mat_suba->bloco->col_inicio; k < mat_suba->bloco->col_fim; k++){
+          mat_subc->matriz->matriz[i][j] += mat_suba->matriz->matriz[i][k] * mat_subb->matriz->matriz[k][j];
       }
     }
   }
@@ -163,7 +180,7 @@ matriz_bloco_t **particionar_matriz(int **matriz, int mat_lin, int mat_col, int 
   newMatriz->lin = mat_lin;
   newMatriz->col = mat_col;
 
-  if(orientacao == 0){ //vertical
+   if(orientacao == 0){ //vertical
     int desloc = mat_lin/divisor;
     for(int i=0; i<divisor; i++){
       block[i]->matriz = newMatriz;
@@ -175,6 +192,7 @@ matriz_bloco_t **particionar_matriz(int **matriz, int mat_lin, int mat_col, int 
       block[i]->bloco->col_fim = mat_col;
     }
     block[divisor-1]->bloco->lin_fim = mat_lin;
+
   } else { //horizontal
     int desloc = mat_col/divisor;
     for(int i=0; i<divisor; i++){
@@ -187,6 +205,7 @@ matriz_bloco_t **particionar_matriz(int **matriz, int mat_lin, int mat_col, int 
       block[i]->bloco->col_fim = (i+1) * desloc;    
     }
     block[divisor-1]->bloco->col_fim = mat_col;
+
   }    
   return block;
 }

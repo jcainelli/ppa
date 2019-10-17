@@ -10,8 +10,10 @@ int malocar(mymatriz *mat) {
     }
     if (mat == NULL) {
         printf("ERRO (MALOCAR) - Sem memoria\n");
+        //Retorno FALSE porem esta invertido porque na chamada do malocar o prof nao colocou !
         return 1;
     }
+    //Retorno TRUE porem esta invertido porque na chamada do malocar o prof nao colocou !
     return 0;
 }
 
@@ -80,24 +82,23 @@ int mliberar(mymatriz *matriz) {
 int mcomparar(mymatriz *matriza, mymatriz *matrizb){
 
    if (matriza == NULL || matrizb == NULL) {
-       printf("Matriz A e/ou Matriz B invalida(s) - nula.");
+       printf("ERRO (MCOMPARAR) - Matriz A e/ou Matriz B invalida(s) - nula.\n");
        return 0;
     }
 
    if (matriza->lin != matrizb->lin || matriza->col != matrizb->col) {
-       printf("A Matriz A e Matriz B divergem no numero de linhas e colunas.");
+       printf("ERRO (MCOMPARAR) - A Matriz A e Matriz B divergem no numero de linhas e colunas.\n");
        return 0;
     }
 
 	for (int i=0; i < matriza->lin; i++) {
 	  for (int j=0; j < matriza->col; j++){
 			if (matriza->matriz[i][j] != matrizb->matriz[i][j]) {
-				printf("# O elemento [%d,%d] eh diferente nas matrizes: %d != %d ", i,j,matriza->matriz[i][j], matrizb->matriz[i][j]);
+				printf("(MCOMPARAR) O elemento [%d,%d] eh diferente nas matrizes: %d != %d\n", i,j,matriza->matriz[i][j], matrizb->matriz[i][j]);
 				return 0;
 			}
 		}
 	}
-	printf("Matrizes identicas");
-
+	printf("\tVERIFICADO (MCOMPARAR): Matrizes identicas\n\n");
     return 1;
 }

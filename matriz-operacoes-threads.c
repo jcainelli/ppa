@@ -1,43 +1,27 @@
+#include <pthread.h>
+#include "toolsv3.h"
+#include "matrizv3.h"
 #include "matriz-operacoesv3.h"
 #include "matriz-operacoes-threads.h"
 
-int calculaParticaoCorte (int valor, int porcao_particao){
-    return valor / 2;
+int multiplicarIKJThread (mymatriz *mat_a, mymatriz *mat_b, mymatriz *mat_c, int nThread, int nMaxThread) {
+  int i_max = mat_a->lin;
+  int j_max = mat_b->col;
+  int k_max = mat_a->col;
+
+  for (int i = nThread; i < i_max; i += nMaxThread){
+      for (int k = 0; k < k_max; k++){
+          for (int j = 0; j < j_max; j++){
+              mat_c->matriz[i][j] += mat_a->matriz[i][k] * mat_b->matriz[k][j];
+          }
+      }
+  }
+  return 0;
 }
 
-void *multiplicarTh (mymatriz *mat_a, mymatriz *mat_b, mymatriz *mat_c, int porcao_particao){
-
-    int lin_inic_a, lin_media_a, col_inic_a, col_fim_a, col_inic_b, col_fim_b = 0;
-
-    lin_media_a = calculaParticaoCorte(mat_a->lin, porcao_particao);
-
-    if (porcao_particao == 1){        
-        for(int i = 0; i < lin_media_a; i++){          
-            for(int j = 0; j < mat_b->col; j++){
-                for(int k = 0; k < mat_a->col; k++){
-                    mat_c->matriz[i][j] += mat_a->matriz[i][k] * mat_b->matriz[k][j];
-                }
-            }
-        }
-    }else{
-        for(int i = lin_media_a; i < mat_a->lin; i++){          
-            for(int j = 0; j < mat_b->col; j++){
-                for(int k = 0; k < mat_a->col; k++){
-                    mat_c->matriz[i][j] += mat_a->matriz[i][k] * mat_b->matriz[k][j];
-                }
-            }
-        }
-    }    
-}
-
-void *multiplicarThblocos (matriz_bloco_t *mat_suba, matriz_bloco_t *mat_subb, matriz_bloco_t *mat_subc){
-    printf("## multiplicarThblocos \n");
+int multiplicaBlocoThread(matriz_bloco_t *mat_suba, matriz_bloco_t *mat_subb, matriz_bloco_t *mat_subc)
+{
     mmsubmatriz(mat_suba, mat_subb, mat_subc);
-    printf(
-        "%d - ", mat_suba->bloco->col_fim, 
-        "%d - ", mat_subb->bloco->col_fim,
-        "%d - ", mat_suba->matriz->matriz[0][0],
-    "\n"
-    );
-
+    return 0;
 }
+
