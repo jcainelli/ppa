@@ -4,28 +4,28 @@
 
 #ifndef SOME_HEADER_FILE_H
 #define SOME_HEADER_FILE_H
-typedef struct {
-  int lin_inicio;
-  int lin_fim;
-  int col_inicio;
-  int col_fim;
+typedef struct
+{
+    int **matriz;
+    int lin;
+    int col;
+} mymatriz;
+
+typedef struct
+{
+    int lin_inicio;
+    int lin_fim;
+    int col_inicio;
+    int col_fim;
 } bloco_t;
 
-typedef struct {
-  int **matriz;
-  bloco_t *bloco;
-  int mat_col;
-  int mat_lin;
-  int divisor;
+typedef struct
+{
+    mymatriz *matriz;
+    bloco_t *bloco;
 } matriz_bloco_t;
 
-typedef struct {
-  int **matriz;
-  int lin;
-  int col;
-} mymatriz;
 #endif
-
 
 // externos a biblioteca tools
 double wtime();
@@ -40,4 +40,3 @@ char *get_line_file ( FILE *const fin, int get_line, int nro_line, int *vet_line
 int filein_matriz (int **matriz, int linha, int coluna, FILE *file, int *vet_ind, int nr_line);
 int conta_line_file ( FILE *const fin, int get_line, int nro_line, int *vet_line );
 int nr_line_file ( FILE *const fin, int *vet_line );
-

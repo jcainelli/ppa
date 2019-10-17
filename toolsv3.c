@@ -20,7 +20,7 @@ int splitv2(const char *str, char sep, int nro_line, int *vetnum) {
   char *tmpStr;
 
   #if _DEBUG_
-  printf("SPLITv2: \n\tConte�do da linha (%s)\n\tSeparador (%c)\n\tNro de caracteres na Linha(%d)\n", str, sep, nro_line);
+  printf("SPLITv2: \n\tConteúdo da linha (%s)\n\tSeparador (%c)\n\tNro de caracteres na Linha(%d)\n", str, sep, nro_line);
   #endif
 
   conta_palavras = 0;
@@ -44,7 +44,7 @@ int splitv2(const char *str, char sep, int nro_line, int *vetnum) {
 
         tmpStr = (char *) calloc (12,sizeof(char));
         if (tmpStr == NULL) printf("ERROR: Out of memory\n");
-        if ((stop - start) > 10) printf("ERROR: N�mero mto grande.\n");
+        if ((stop - start) > 10) printf("ERROR: Número mto grande.\n");
         memcpy (tmpStr, str + start, stop - start);
 
         #if _DEBUG_
@@ -57,7 +57,7 @@ int splitv2(const char *str, char sep, int nro_line, int *vetnum) {
         conta_palavras++;
         start = stop + 1;
       } else {
-        printf("Error: Ultrapassou o n�mero m�ximo de palavras (%d)\n",conta_palavras);
+        printf("Error: Ultrapassou o número máximo de palavras (%d)\n",conta_palavras);
         exit (0);
       }
     }
@@ -98,7 +98,7 @@ int conta_line_file ( FILE *const fin, int get_line, int nro_line, int *vet_line
     }
     count++;
     if (count > (precisao-1)) {
-      printf("ERRO: Estouro de precis�o!\n");
+      printf("ERRO: Estouro de precisão!\n");
       exit(1);
     }
   }
@@ -275,7 +275,7 @@ int extrai_parametros_matriz ( FILE *const fin, int* linha,
     #endif
 
     if (linha != (nr_line -2)) {
-      printf("ERRO: Numero de linha da MatrizA esta diferete da MatrizB!\n");
+      printf("ERRO: Numero de linha da matriz nao esta correta!\n");
       exit (1);
     }
 
@@ -303,4 +303,3 @@ int extrai_parametros_matriz ( FILE *const fin, int* linha,
     }
     return 0;
   }
-
