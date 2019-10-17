@@ -31,5 +31,10 @@ make gmat
 # Compilar Execicio 4 (Main):
 make mainEx04
 
+# Parâmetros
+1 - Matriz (A)
+2 - Matriz (B)
+3 - Número de Threads
+
 # Executar: 
- ./mainEx04 mat_a3x4.tst mat_b4x3.tst 
+ ./mainEx05 mat_a3x4.tst mat_b4x3.tst 4
