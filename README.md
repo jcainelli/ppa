@@ -9,8 +9,8 @@ Programa em C para comparação de matrizes.
 * mat_a3x4.tst, mat_b3x4.tst: Arquivos de matrizes para teste
 * matriz-operacoesv3.c: implementação das funções msomar, mmultiplicar
 * matriz-operacoesv3.h: Struct das funções msomar, mmultiplicar
-* matriz-operacoes-threads.h: Implementação das funções multiplicarTh e multiplicarThblocos
-* matriz-operacoes-threads.h: Struct das funções multiplicarTh e multiplicarThblocos
+* matriz-operacoes-omp.h: Implementação das funções multiplicarOMP e multiplicarOMPblocos
+* matriz-operacoes-omp.h: Struct das funções multiplicarOMP e multiplicarOMPblocos
 * matrizv3.c: fontes do programa que implementa as operações: mcomparar, mliberar, mimprimir, mzerar, mgerar
 * matrizv3.h: Struct das funções: mcomparar, mliberar, mimprimir, mzerar, mgerar
 * toolsv3.(c/h): biblioteca de leitura/escrita de matrizes em arquivos;  

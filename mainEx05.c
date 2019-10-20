@@ -1,25 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <pthread.h>
+#include <omp.h>
 #include "toolsv3.h"
 #include "matrizv3.h"
 #include "matriz-operacoesv3.h"
-#include "matriz-operacoes-threads.h"
+#include "matriz-operacoes-omp.h"
 
-void *execMultThread (void *arg) {
-  param_t *p = (param_t *) arg;
-
-  multiplicarIKJThread(p->mat_a, p->mat_b, p->mat_c, p->tid, p->ntasks);
-  return NULL;
-}
-void *execMultiThreadBlocos (void *arg) {
-  param_t *p = (param_t *) arg;
-
-  multiplicaBlocoThread(p->mat_bloco_a, p->mat_bloco_b, p->mat_bloco_c);
-
-  return NULL;
-}
 
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 int main(int argc, char *argv[]) {
@@ -27,6 +14,7 @@ int main(int argc, char *argv[]) {
 	// DECLARAÇÃO de VARIÁVEIS
 	mymatriz mat_a, mat_b;
 	mymatriz **mmultbloco, **mmultblocoPara, **mmult, **mmultPara;
+
 	char filename[100];
 	FILE *fmat;
 	int nr_line;
@@ -49,15 +37,15 @@ int main(int argc, char *argv[]) {
 	FILE *fmatpara_c;
 	int nthreads = 2;
 
-	pthread_t *threadsPara,*threadsBlocos  = NULL;
-
-    param_t *args;
-
 	if (argc != 4){
 		printf ("ERRO: Numero de parametros %s <matriz_a> <matriz_b> <nthreads>\n", argv[0]);
 		exit (1);
 	}
 
+
+	if (argv[3] != NULL){
+		nthreads = atoi(argv[3]);
+	}
 
 	// %%%%%%%%%%%%%%%%%%%%%%%% Leitura da Matriz A (arquivo) %%%%%%%%%%%%%%%%%%%%%%%%
 	fmat = fopen(argv[1],"r");
@@ -130,35 +118,17 @@ int main(int argc, char *argv[]) {
 	}
 
 	for(int i = 0; i < 10; i++) {
-
 		start_time = wtime();
 		mzerar(mmultPara[0]);
-		// Iniciando threads para multiplicação
-		threadsPara = (pthread_t *) malloc(sizeof(pthread_t) * nthreads);
-		args = (param_t *) malloc(nthreads * sizeof(param_t));
 
-        for (int i = 0; i < nthreads; i++)
-        {
-            args[i].tid = i;
-            args[i].ntasks = nthreads;
-			args[i].mat_a  = &mat_a;
-			args[i].mat_b  = &mat_b;
-			args[i].mat_c  = mmultPara[0];
+		multiplicarOMP(&mat_a, &mat_b, mmultPara[0], nthreads);
 
-            pthread_create(&threadsPara[i], NULL, execMultThread, (void *) (args+i));
-        }
-        for (int i = 0; i < nthreads; i++)
-        {
-            pthread_join(threadsPara[i], NULL);
-        }
 		end_time = wtime();
 		paraTempos[i] = end_time - start_time;
 	}
 
 	fmatpara_c = fopen("outPara.map-result","w");
 	fileout_matriz(mmultPara[0], fmatpara_c);
-	free(threadsPara);
-
 
 	for(int i = 0; i < 10; i++) {
 		paraTot += paraTempos[i];
@@ -175,8 +145,10 @@ int main(int argc, char *argv[]) {
 		Vsubmat_a = particionar_matriz (mat_a.matriz, N, La, 1, 2);
 		Vsubmat_b = particionar_matriz (mat_b.matriz, Lb, M, 0, 2);
 		Vsubmat_c = csubmatrizv2 (N, M, nro_submatrizes);
+
 		mmsubmatriz (Vsubmat_a[0], Vsubmat_b[0], Vsubmat_c[0]);
 		mmsubmatriz (Vsubmat_a[1], Vsubmat_b[1], Vsubmat_c[1]); 
+
 		mmultbloco[0] = msomar(Vsubmat_c[0]->matriz, Vsubmat_c[1]->matriz, 1);
 		end_time = wtime();
 
@@ -192,7 +164,7 @@ int main(int argc, char *argv[]) {
 	}
 	seqBlocoMed = seqBlocoTot/10;
 
-
+	printf("P1\n");
 
 	// %%%%%%%%%%%%%%%%%%%%%%%% INI - PARALELA - multiplicar_t1 de Matrizes - MULTIPLICACAO <por bloco> %%%%%%%%%%%%%%%%%%%%%%%%
 	mmultblocoPara = (mymatriz **) malloc (sizeof(mymatriz *));
@@ -204,28 +176,19 @@ int main(int argc, char *argv[]) {
 		Vsubmat_b = particionar_matriz (mat_b.matriz, Lb, M, 0, 2);
 		Vsubmat_c = csubmatrizv2 (N, M, nro_submatrizes);
 		
-		threadsBlocos = (pthread_t *) malloc (sizeof(pthread_t) * nthreads);
-
-        args = (param_t *)malloc(nthreads * sizeof(param_t));
-        start_time = wtime();
-        for (int i = 0; i < nthreads; i++)
-        {
-            args[i].tid = i;
-            args[i].ntasks = nthreads;
-            args[i].mat_bloco_a = Vsubmat_a[i];
-            args[i].mat_bloco_b = Vsubmat_b[i];
-            args[i].mat_bloco_c = Vsubmat_c[i];
-            pthread_create(&threadsBlocos[i], NULL, execMultiThreadBlocos, (void *)(args + i));
-        }
-		for (int i=0; i<nthreads; i++){
-			pthread_join(threadsBlocos[i], NULL);
+		start_time = wtime();
+		// Aqui fixo por 2 porque so foi separado em 2 partes
+		#pragma omp parallel for num_threads(2)		
+		for (int i = 0; i < 2; i++){
+			multiplicarOMPblocos (Vsubmat_a[i], Vsubmat_b[i], Vsubmat_c[i]);
 		}
+
 		mmultblocoPara[0] = msomar(Vsubmat_c[0]->matriz, Vsubmat_c[1]->matriz, 1);
+
 		end_time = wtime();
 		paraBlocosTempos[iCont] = end_time - start_time;
 	}
 	
-	free(threadsBlocos);
 	sprintf(filename, "multBlocoPara.result");
 	fmat = fopen(filename,"w");
 	fileout_matriz(mmultblocoPara[0], fmat);
@@ -237,7 +200,6 @@ int main(int argc, char *argv[]) {
 	paraBlocoMed  = paraBlocoTot/10;
 	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
 
-
 	// %%%%%%%%%%%%%%%%%%%%%%%% Comparação dos resultados %%%%%%%%%%%%%%%%%%%%%%%%
 	printf("\n\n##### Comparação dos resultados da Multiplicação de Matrizes #####\n");
 
@@ -247,11 +209,11 @@ int main(int argc, char *argv[]) {
 	mcomparar (mmult[0], mmultPara[0]);
 	printf("[Companrando -> Sequencial mult[0] vs Paralelo Bloco multblocoPara[0]] : ");
 	mcomparar (mmult[0],mmultblocoPara[0]);
-	
+
 	printf("\n##Tempo Medio 10 Multiplicações Sequencial..............[%f]\n", seqMed);
 	printf("##Tempo Medio 10 Multiplicações Sequencial Bloco........[%f]\n", seqBlocoMed);
 	printf("##Tempo Medio 10 Multiplicações Paralelo................[%f]\n", paraMed);
-	printf("##Tempo Medio 10 Multiplicações Paralelo Bloco..........[%f]\n", paraBlocoMed);
+	printf("##Tempo Medio 10 Multiplicações Paralelo Bloco..........[%f]\n", paraBlocoMed);	
 	printf("##SpeedUp Multiplicacao Sequencial / Paralela ..........[%f]\n", seqMed / paraMed);
 	printf("##SpeedUp Multiplicacao Bloco Sequencial / Paralela.....[%f]\n\n", seqBlocoMed / paraBlocoMed);
 
