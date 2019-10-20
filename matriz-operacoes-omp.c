@@ -5,7 +5,6 @@
 #include "matriz-operacoes-omp.h"
 
 
-
 int multiplicarOMP (mymatriz *mat_a, mymatriz *mat_b, mymatriz *mat_c, int nMaxThread) {
   int i_max = mat_a->lin;
   int j_max = mat_b->col;
