@@ -29,7 +29,12 @@ valgrind ./mainEx04 100x200-mat.map 200x100-mat.map
 make gmat
 
 # Compilar Execicio 4 (Main):
-make mainEx04
+make mainEx05
 
 # Executar: 
- ./mainEx04 mat_a3x4.tst mat_b4x3.tst 
+ ./mainEx05 mat_a3x4.tst mat_b4x3.tst 2
+
+ # Parâmetros
+ 1 - Matriz (A)
+ 2 - Matriz (B)
+ 3 - Número de Threads (Default 2)
