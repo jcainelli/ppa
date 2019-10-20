@@ -127,7 +127,7 @@ int main(int argc, char *argv[]) {
 		paraTempos[i] = end_time - start_time;
 	}
 
-	fmatpara_c = fopen("outPara.map-result","w");
+	fmatpara_c = fopen("multSeq.result","w");
 	fileout_matriz(mmultPara[0], fmatpara_c);
 
 	for(int i = 0; i < 10; i++) {
@@ -163,8 +163,6 @@ int main(int argc, char *argv[]) {
 		seqBlocoTot += seqBlocosTempos[i];
 	}
 	seqBlocoMed = seqBlocoTot/10;
-
-	printf("P1\n");
 
 	// %%%%%%%%%%%%%%%%%%%%%%%% INI - PARALELA - multiplicar_t1 de Matrizes - MULTIPLICACAO <por bloco> %%%%%%%%%%%%%%%%%%%%%%%%
 	mmultblocoPara = (mymatriz **) malloc (sizeof(mymatriz *));
