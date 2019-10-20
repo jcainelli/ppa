@@ -9,7 +9,7 @@ TARGET = mainEx05 gmat help
 all: $(TARGET)
 
 %.o: %.c
-	$(CC) $(CCFLAGS) -c $<
+	$(CC) $(CCFLAGS) -c $< $(LDFLAGS)
 
 %: %.o
 	$(CC) $(LDFLAGS) $^ -o $@
