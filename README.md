@@ -35,6 +35,6 @@ make mainEx05
  ./mainEx05 mat_a3x4.tst mat_b4x3.tst 2
 
  # Parâmetros
- 1 - Matriz (A)
- 2 - Matriz (B)
- 3 - Número de Threads (Default 2)
+ 1 - Matriz (A)\
+ 2 - Matriz (B)\
+ 3 - Número de Threads (Default 2)\
