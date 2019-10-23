@@ -23,16 +23,16 @@ make clean; make
 ./gmat 200 100
 
 # Valgrind
-valgrind ./mainEx05 100x200-mat.map 200x100-mat.map
+valgrind ./mainEx06 100x200-mat.map 200x100-mat.map
 
 # Compilar a biblioteca Gmat (gera_matrizv3.c) para gerar uma matriz
 make gmat
 
 # Compilar Execicio 4 (Main):
-make mainEx05
+make mainEx06
 
 # Executar: 
- ./mainEx05 mat_a3x4.tst mat_b4x3.tst 2
+ ./mainEx06 mat_a3x4.tst mat_b4x3.tst 2
 
  # Parâmetros
  1 - Matriz (A)\
