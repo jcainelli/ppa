@@ -5,11 +5,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include <omp.h>
+#include <mpi.h>
 #include "toolsv3.h"
 #include "matrizv3.h"
 #include "matriz-operacoesv3.h"
-#include "matriz-operacoes-omp.h"
+#include "matriz-operacoes-mpi.h"
 
 typedef struct {
 	int tid;
@@ -22,7 +22,7 @@ typedef struct {
     matriz_bloco_t *mat_bloco_c;
 }param_t;
 
-int multiplicarOMPblocos(matriz_bloco_t *mat_suba, matriz_bloco_t *mat_subb, matriz_bloco_t *mat_subc);
-int multiplicarOMP (mymatriz *mat_a, mymatriz *mat_b, mymatriz *mat_c, int nMaxThread);
+int multiplicarMPIblocos(matriz_bloco_t *mat_suba, matriz_bloco_t *mat_subb, matriz_bloco_t *mat_subc);
+int multiplicarMPI (mymatriz *mat_a, mymatriz *mat_b, mymatriz *mat_c, int nMaxThread);
 
 #endif

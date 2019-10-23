@@ -1,11 +1,11 @@
-#include <omp.h>
+#include <mpi.h>
 #include "toolsv3.h"
 #include "matrizv3.h"
 #include "matriz-operacoesv3.h"
-#include "matriz-operacoes-omp.h"
+#include "matriz-operacoes-mpi.h"
 
 
-int multiplicarOMP (mymatriz *mat_a, mymatriz *mat_b, mymatriz *mat_c, int nMaxThread) {
+int multiplicarMPI (mymatriz *mat_a, mymatriz *mat_b, mymatriz *mat_c, int nMaxThread) {
   int i_max = mat_a->lin;
   int j_max = mat_b->col;
   int k_max = mat_a->col;
@@ -21,7 +21,7 @@ int multiplicarOMP (mymatriz *mat_a, mymatriz *mat_b, mymatriz *mat_c, int nMaxT
   return 0;
 }
 
-int multiplicarOMPblocos(matriz_bloco_t *mat_suba, matriz_bloco_t *mat_subb, matriz_bloco_t *mat_subc)
+int multiplicarMPIblocos(matriz_bloco_t *mat_suba, matriz_bloco_t *mat_subb, matriz_bloco_t *mat_subc)
 {
     mmsubmatriz(mat_suba, mat_subb, mat_subc);
     return 0;

@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <omp.h>
+#include <mpi.h>
 #include "toolsv3.h"
 #include "matrizv3.h"
 #include "matriz-operacoesv3.h"
-#include "matriz-operacoes-omp.h"
+#include "matriz-operacoes-mpi.h"
 
 
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -121,7 +121,7 @@ int main(int argc, char *argv[]) {
 		start_time = wtime();
 		mzerar(mmultPara[0]);
 
-		multiplicarOMP(&mat_a, &mat_b, mmultPara[0], nthreads);
+		multiplicarMPI(&mat_a, &mat_b, mmultPara[0], nthreads);
 
 		end_time = wtime();
 		paraTempos[i] = end_time - start_time;
@@ -178,7 +178,7 @@ int main(int argc, char *argv[]) {
 		// Aqui fixo por 2 porque so foi separado em 2 partes
 		#pragma omp parallel for num_threads(2)		
 		for (int i = 0; i < 2; i++){
-			multiplicarOMPblocos (Vsubmat_a[i], Vsubmat_b[i], Vsubmat_c[i]);
+			multiplicarMPIblocos (Vsubmat_a[i], Vsubmat_b[i], Vsubmat_c[i]);
 		}
 
 		mmultblocoPara[0] = msomar(Vsubmat_c[0]->matriz, Vsubmat_c[1]->matriz, 1);
@@ -211,8 +211,8 @@ int main(int argc, char *argv[]) {
 	printf("\n##Tempo Medio 10 Multiplicações Sequencial..............[%f]\n", seqMed);
 	printf("##Tempo Medio 10 Multiplicações Sequencial Bloco........[%f]\n", seqBlocoMed);
 	printf("##Tempo Medio 10 Multiplicações Paralelo................[%f]\n", paraMed);
-	printf("##Tempo Medio 10 Multiplicações Paralelo Bloco..........[%f]\n", paraBlocoMed);	
-	printf("\n##SpeedUp Multiplicacao Sequencial / Paralela ..........[%f]\n", seqMed / paraMed);
+	printf("##Tempo Medio 10 Multiplicações Paralelo Bloco..........[%f]\n\n", paraBlocoMed);	
+	printf("##SpeedUp Multiplicacao Sequencial / Paralela ..........[%f]\n", seqMed / paraMed);
 	printf("##SpeedUp Multiplicacao Bloco Sequencial / Paralela.....[%f]\n\n", seqBlocoMed / paraBlocoMed);
 
 	// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%

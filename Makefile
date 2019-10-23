@@ -14,8 +14,8 @@ all: $(TARGET)
 %: %.o
 	$(CC) $(LDFLAGS) $^ -o $@
 
-mainEx06: mainEx06.c matrizv3.o toolsv3.o matriz-operacoesv3.o matriz-operacoes-omp.o
-		$(CC) $(CCFLAGS) matriz-operacoes-omp.o matriz-operacoesv3.o matrizv3.o toolsv3.o mainEx06.c -o $@ $(LDFLAGS)
+mainEx06: mainEx06.c matrizv3.o toolsv3.o matriz-operacoesv3.o matriz-operacoes-mpi.o
+		$(CC) $(CCFLAGS) matriz-operacoes-mpi.o matriz-operacoesv3.o matrizv3.o toolsv3.o mainEx06.c -o $@ $(LDFLAGS)
 
 gmat: matrizv3.o toolsv3.o gera_matrizv3.c
 		$(CC) $(CCFLAGS) matrizv3.o toolsv3.o gera_matrizv3.c -o $@ $(LDFLAGS)
