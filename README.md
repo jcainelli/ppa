@@ -37,4 +37,4 @@ make mainEx06
  # Parâmetros
  1 - Matriz (A)\
  2 - Matriz (B)\
- 3 - Número de Threads (Default 2)\
+ 3 - Número de Threads (Default 2)
