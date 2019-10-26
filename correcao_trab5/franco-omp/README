@@ -1,0 +1,33 @@
+** arquivo não alterado, utilize readme.md  **
+
+###################################################
+### Disciplina de Programação Paralela Avançada ###
+###################################################
+Revisão: ago/2019
+Linguagem: C
+Versão: v3 (tools, matriz, matriz-operacoes)
+Executáveis: main e gmat
+
+main: código principal de teste das funções
+gmat: gerador de matrizes NxM em arquivo
+
+
+Compilar gmat
+make gmat
+
+Compilar main
+make main
+
+Criar matriz
+executavel nºlin nºCol
+Ex:
+./gmat 1024 1024
+Atenção: As matrizes devem ser sempre de dimensão quadrada, e de L ou A, elevados em base 2, Ex 2 2 ou 8 8 ou 16 16 ou 32 32 ... 
+
+Rodar o main
+Precisa chamar o main e mais três argumentos, mat1, mat2, nº de Blocos
+Ex: 
+./main 512x512-mat.map 1024Xmat.map 4 
+Atenção: O número de blocos, podem ser 2, 4, 8, 16. Acima disso tive problemas de execução. E a execução é finalizada. 
+Matriz de 1024 funciona acima de 2 Blocos. 
+Matrizes pequenas fucionam bem, por exemplo: 32x32 pode ser dividida em 2, 4, 8, 16, e 32 blocos. 
