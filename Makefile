@@ -3,7 +3,7 @@
 
 CC = mpicc
 CCFLAGS = -Wall -O3
-LDFLAGS = -fopenmp 
+LDFLAGS =  
 TARGET = mainEx06 gmat help
 
 all: $(TARGET)

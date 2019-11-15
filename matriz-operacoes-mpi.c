@@ -10,7 +10,6 @@ int multiplicarMPI (mymatriz *mat_a, mymatriz *mat_b, mymatriz *mat_c, int nMaxT
   int j_max = mat_b->col;
   int k_max = mat_a->col;
 
-  #pragma omp parallel for num_threads(nMaxThread) shared (i_max,j_max,k_max,mat_a,mat_b,mat_c)
   for (int i = 0; i < i_max; i++){
       for (int k = 0; k < k_max; k++){
           for (int j = 0; j < j_max; j++){

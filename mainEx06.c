@@ -175,8 +175,8 @@ int main(int argc, char *argv[]) {
 		Vsubmat_c = csubmatrizv2 (N, M, nro_submatrizes);
 		
 		start_time = wtime();
-		// Aqui fixo por 2 porque so foi separado em 2 partes
-		#pragma omp parallel for num_threads(2)		
+		
+		// FIXME: Aqui fixo por 2 porque so foi separado em 2 partes
 		for (int i = 0; i < 2; i++){
 			multiplicarMPIblocos (Vsubmat_a[i], Vsubmat_b[i], Vsubmat_c[i]);
 		}

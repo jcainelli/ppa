@@ -48,9 +48,10 @@ int mimprimir(mymatriz *matriz){
        printf("ERRO (MGERAR) - Matriz invalida - nula.\n");
        return 0;
     }
-
+/*
 	for (int j = 0; j < matriz->col; j++)
 		printf("\t(%d)", j);
+        
 	printf("\n");
 	for (int i = 0; i < matriz->lin; i++) {
 		printf("(%d)", i);
@@ -58,7 +59,7 @@ int mimprimir(mymatriz *matriz){
 			printf("\t%d", matriz->matriz[i][j]);
 		}
 		printf("\n");
-	}
+	}*/
 	return 1;
 }
 

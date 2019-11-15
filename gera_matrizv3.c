@@ -35,14 +35,10 @@ int main(int argc, char **argv) {
 	mma0.lin = linha;
 	mma0.col = coluna;
 	if (malocar(&mma0)) {	//
-	// printf("##### Arquivo %dx%d-mat.map: VERIFICADO! #####\n", linha, coluna);
-
 		printf ("ERROR: Out of memory\n");
 	}
 	mgerar(&mma0, -9999);
-	mimprimir(&mma0);
 
-	printf("\t\t**** PRINT mat_c NxM(%d,%d) **** \n", linha, coluna);
 	fileout_matriz(&mma0, fmat0);
 	mliberar (&mma0);
 	printf("#####\n Arquivo com a matriz gerada (%dx%d-mat.map).\n#####\n", linha, coluna);
@@ -60,11 +56,9 @@ int main(int argc, char **argv) {
 	}
 
 	filein_matriz(mma1.matriz, linha, coluna, fmat1, vet_line, nr_line);
-	mimprimir(&mma1);
 	mliberar(&mma1);
 	free(vet_line);
-  fclose(fmat1);
-
-	printf("##### Arquivo %dx%d-mat.map: VERIFICADO! #####\n", linha, coluna);
-  return 0;
+  	fclose(fmat1);
+	
+	return 0;
 }
