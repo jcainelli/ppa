@@ -59,10 +59,11 @@ mymatriz *mmultiplicar(mymatriz *mat_a, mymatriz *mat_b, int tipo) {
     mat_mult->col = mat_b->col; 
 
     if (malocar(mat_mult)) {
-		printf ("ERRO (MMULTIPLICAR) - Erro ao alocar matriz Multiplica\n");
-        return NULL;
-	}
-	mzerar(mat_mult);
+      printf ("ERRO (MMULTIPLICAR) - Erro ao alocar matriz Multiplica\n");
+          return NULL;
+    }
+    
+	  mzerar(mat_mult);
 
     if (tipo == 0) {    //IJK
         for(int i = 0; i < mat_a->lin; i++){          

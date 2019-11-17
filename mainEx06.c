@@ -21,10 +21,10 @@ int main(int argc, char *argv[]) {
 	mymatriz **mmult, **mmultbloco /*, **mmultPara  **mmultblocoPara, */;
 	mymatriz *mmultPara;
 	char filename[100];
-	FILE *fmat /**fmatpara_c*/;
+	FILE *fmat /***/;
 	int *vet_line = NULL;
 	int nr_line, N, M, La, Lb, nro_submatrizes = 2;
-	double seqTempos[10], seqBlocosTempos[10] /*, paraTempos[10], paraBlocosTempos[10]*/;	
+	double seqTempos[10], seqBlocosTempos[10], paraTempos[10] /*, , paraBlocosTempos[10]*/;	
 	double seqTot = 0, seqBlocoTot = 0, seqMed = 0, seqBlocoMed  = 0, start_time = 0, end_time = 0 /* paraTot = 0 paraBlocoTot = 0*/;
 	matriz_bloco_t **Vsubmat_a = NULL, **Vsubmat_b = NULL, **Vsubmat_c = NULL;
 
@@ -107,7 +107,7 @@ int main(int argc, char *argv[]) {
 			seqTempos[i] = end_time - start_time;
 		}
 		
-		sprintf(filename, "mult_t1.result");
+		sprintf(filename, "multSeq.result");
 		fmat = fopen(filename,"w");
 		fileout_matriz(mmult[0], fmat);
 		fclose(fmat);
@@ -125,9 +125,7 @@ int main(int argc, char *argv[]) {
 			Vsubmat_a = particionar_matriz (mat_a.matriz, N, La, 1, 2);
 			Vsubmat_b = particionar_matriz (mat_b.matriz, Lb, M, 0, 2);
 			Vsubmat_c = csubmatrizv2 (N, M, nro_submatrizes);
-		}
 
-		for(int i = 0; i < 10; i++) {
 			mmsubmatriz (Vsubmat_a[0], Vsubmat_b[0], Vsubmat_c[0]);
 			mmsubmatriz (Vsubmat_a[1], Vsubmat_b[1], Vsubmat_c[1]); 
 
@@ -146,12 +144,11 @@ int main(int argc, char *argv[]) {
 		}
 		seqBlocoMed = seqBlocoTot/10;
 
-		// %%%%%%%%%%%%%%%%%%%%%%%% INI - PARALELO - multiplicar_t1 de Matrizes - MULTIPLICACAO %%%%%%%%%%%%%%%%%%%%%%%%		
 
+		// %%%%%%%%%%%%%%%%%%%%%%%% INI - PARALELO - multiplicar_t1 de Matrizes - MULTIPLICACAO %%%%%%%%%%%%%%%%%%%%%%%%		
 		int a[mat_a.lin][mat_a.col];
 		int b[mat_b.lin][mat_b.col];
 		int c[mat_a.lin][mat_b.col]; 
-
 
 		for(int l = 0; l < mat_a.lin; l++)
 			for (int c = 0; c < mat_a.col; c++)
@@ -177,12 +174,15 @@ int main(int argc, char *argv[]) {
 		parameters[3] = mat_b.col;
 		// Aloca memoria para o resultado da multiplicação
 		mmultPara = (mymatriz*) malloc(sizeof(mymatriz));
+		mmultPara = malloc(sizeof(mymatriz));
 		mmultPara->matriz = NULL;
 		mmultPara->lin = mat_a.lin;
 		mmultPara->col = mat_b.col; 
 		
-		for (dest=1; dest<=numworkers; dest++)
-		{
+		start_time = wtime();
+
+		printf("## MESTRE - ENVIANDO PARA (%d) ESCREAVOS\n", numworkers);
+		for (dest=1; dest<=numworkers; dest++){
 			rows = (dest <= extra) ? averow+1 : averow;   	
 
 			MPI_Send(&rows, 1, MPI_INT, dest, mtype, MPI_COMM_WORLD);
@@ -191,36 +191,53 @@ int main(int argc, char *argv[]) {
 			MPI_Send(&b, NCA*NCB, MPI_INT, dest, mtype, MPI_COMM_WORLD);
 			MPI_Send(&offset, 1, MPI_INT, dest, mtype, MPI_COMM_WORLD);
 			offset = offset + rows;
-
-			//printf("Sending %d rows to task %d offset=%d\n",rows,dest,offset);
-			//printf("# Send Params : %d %d %d %d\n", parameters[0], parameters[1], parameters[2], parameters[3]);
-
-			/* MPI_Send(&cols, 1, MPI_INT, dest, mtype, MPI_COMM_WORLD);		
-			*/
 		}
 
-		/* Receive results from worker tasks */
 		mtype = FROM_WORKER;
-		printf("antesdo resultado : %d\n", numworkers);
-		
 
-		
 		for (i=1; i<=numworkers; i++){
 			source = i;
-			printf("Result : %d\n", source);
+			printf("## MESTRE - PROCESSANDO RETORNO DO ESCRAVO (%d)\n", source);
 			
 			MPI_Recv(&rows, 1, MPI_INT, source, mtype, MPI_COMM_WORLD, &status);
 			MPI_Recv(&offset, 1, MPI_INT, source, mtype, MPI_COMM_WORLD, &status);
-			//MPI_Recv(&c[offset][0], rows*NCB, MPI_DOUBLE, source, mtype, MPI_COMM_WORLD, &status);
+			MPI_Recv(&c[offset][0], rows*NCB, MPI_INT, source, mtype, MPI_COMM_WORLD, &status);
 
-			// SOMAR O RETORNO
-/*			for (int l = 0; l < mat_a.lin; l++){
-				for (int c = 0; c < mat_b.col; c++){
-					mmultPara[0]->matriz[l][c] = mmultPara[0]->matriz[l][c] + c[l][c];
-				}
-			}*/
+			for (i=0; i<NRA; i++)
+			{
+				printf("\n"); 
+				for (j=0; j<NCB; j++) 
+					printf("%d   ", c[i][j]);
+			}
 			
+/*
+			// SOMAR O RETORNO
+			for (int l = 0; l < mat_a.lin; l++){
+				for (int c = 0; c < mat_b.col; c++){
+					mmultPara[0].matriz[l][c] = mmultPara[0].matriz[l][c] + c[l][c];
+				}
+			}
+*/			
 		}
+
+		// CONTAR O TEMPO
+		end_time = wtime();
+		paraTempos[i] = end_time - start_time;
+		/*for(int i = 0; i < 10; i++) {
+			paraTot += paraTempos[i];
+		}*/
+		//paraMed  = paraTot/10;
+
+		// IMPRIMIR EM ARQUIVO
+		/*
+		sprintf(filename, "multSeqPara.result");
+		fmat = fopen(filename,"w");
+		fileout_matriz(mmultPara[0], fmat);
+		fclose(fmat);
+		*/
+
+
+
 
 		// %%%%%%%%%%%%%%%%%%%%%%%% Comparação dos resultados %%%%%%%%%%%%%%%%%%%%%%%%
 		printf("\n\n##### Comparação dos resultados da Multiplicação de Matrizes #####\n");
@@ -263,13 +280,16 @@ int main(int argc, char *argv[]) {
 		free(mmultblocoPara);*/
 	} 
 	else { // Rank <> 0
-		printf("%d esta esperando\n", rank);
-				
+
+		printf("## ESCRAVO (%d) - ATIVO\n", rank);
+
+
 		mtype = FROM_MASTER;		
 		
-		MPI_Recv(&rows, 1, MPI_INT, MASTER, mtype, MPI_COMM_WORLD, &status);
-		
+		MPI_Recv(&rows, 1, MPI_INT, MASTER, mtype, MPI_COMM_WORLD, &status);		
 		MPI_Recv(&parameters, 4, MPI_INT, MASTER, mtype, MPI_COMM_WORLD, &status);
+
+		printf("## ESCRAVO (%d) - parametros recebidos. %d\n", rank, rows);
 
 		NCA = parameters[1];
 		NCB = parameters[3];
@@ -277,10 +297,17 @@ int main(int argc, char *argv[]) {
 		int a[parameters[0]] [parameters[1]];
 		int b[parameters[2]] [parameters[3]];
 		int c[parameters[0]] [parameters[3]]; 
+		for (int x=0; x<parameters[0]; x++)
+			for (int y=0; y<parameters[3]; y++){
+				c[x][y] = 0;
+			}
 
-		MPI_Recv(&a, rows*NCA, MPI_DOUBLE, MASTER, mtype, MPI_COMM_WORLD, &status);
-		MPI_Recv(&b, NCA*NCB, MPI_DOUBLE, MASTER, mtype, MPI_COMM_WORLD, &status);
+
+
+		MPI_Recv(&a, rows*NCA, MPI_INT, MASTER, mtype, MPI_COMM_WORLD, &status);
+		MPI_Recv(&b, NCA*NCB, MPI_INT, MASTER, mtype, MPI_COMM_WORLD, &status);
 		MPI_Recv(&offset, 1, MPI_INT, MASTER, mtype, MPI_COMM_WORLD, &status);
+
 		
 		for (k=0; k<NCB; k++)
 			for (i=0; i<rows; i++){
@@ -289,11 +316,14 @@ int main(int argc, char *argv[]) {
 					c[i][k] = c[i][k] + a[i][j] * b[j][k];
 			}
 		
+		printf("## ESCRAVO (%d) - CALCULOU A MATRIZ \n", rank);
 
 		mtype = FROM_WORKER;
 		MPI_Send(&rows, 1, MPI_INT, MASTER, mtype, MPI_COMM_WORLD);
 		MPI_Send(&offset, 1, MPI_INT, MASTER, mtype, MPI_COMM_WORLD);
-		//MPI_Send(&c, rows*NCB, MPI_INT, MASTER, mtype, MPI_COMM_WORLD);		
+		MPI_Send(&c, rows*NCB, MPI_INT, MASTER, mtype, MPI_COMM_WORLD);
+		
+		printf("## ESCRAVO (%d) - RETORNOU OS DADOS\n", rank);
 	}
 
 	MPI_Finalize();
