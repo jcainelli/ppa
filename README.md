@@ -28,13 +28,17 @@ valgrind ./mainEx06 100x200-mat.map 200x100-mat.map
 # Compilar a biblioteca Gmat (gera_matrizv3.c) para gerar uma matriz
 make gmat
 
-# Compilar Execicio 4 (Main):
+# Compilar Execicio 6 (Main):
 make mainEx06
 
+# Compilar Execicio 6 (.c):
+mpicc -Wall mainEx06.c
+
 # Executar: 
- ./mainEx06 mat_a3x4.tst mat_b4x3.tst 2
+mpirun --hostfile hosts mainEx06 100x100-mat.map 100x100-mat.map
 
  # Parâmetros
- 1 - Matriz (A)\
- 2 - Matriz (B)\
- 3 - Número de Threads (Default 2)
+ 1 - Arquivo de Hosts\
+ 2 - Programa principal\
+ 3 - Matriz (A)\
+ 4 - Matriz (B)\

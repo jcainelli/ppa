@@ -25,4 +25,3 @@ int multiplicarMPIblocos(matriz_bloco_t *mat_suba, matriz_bloco_t *mat_subb, mat
     mmsubmatriz(mat_suba, mat_subb, mat_subc);
     return 0;
 }
-
