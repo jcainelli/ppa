@@ -246,3 +246,21 @@ matriz_bloco_t **csubmatrizv2 (int mat_lin, int mat_col, int divisor) {
   }
 	return block;
 }
+
+mymatriz *inicializaMatriz(int lines, int columns){
+  mymatriz *mat_mult;
+  
+  mat_mult = (mymatriz*) malloc(sizeof(mymatriz));
+  mat_mult->matriz = NULL;
+  mat_mult->lin = lines;
+  mat_mult->col = columns; 
+
+  if (malocar(mat_mult)) {
+    printf ("ERRO (inicializaMatriz) - Erro ao alocar matriz Multiplica\n");
+    return NULL;
+  }
+
+  mzerar(mat_mult);
+
+  return mat_mult;
+}
