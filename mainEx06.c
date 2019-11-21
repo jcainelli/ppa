@@ -76,8 +76,7 @@ int main(int argc, char *argv[]) {
 		}
 		filein_matriz (mat_a.matriz, N, La, fmat, vet_line, nr_line);
 		free (vet_line);
-		fclose(fmat);
-		
+		fclose(fmat);		
 
 		// %%%%%%%%%%%%%%%%%%%%%%%% Leitura da Matriz B (arquivo) %%%%%%%%%%%%%%%%%%%%%%%%
 		fmat = fopen(argv[2],"r");
@@ -116,6 +115,7 @@ int main(int argc, char *argv[]) {
 			seqTot += seqTempos[i];
 		}
 		seqMed = seqTot/10;		
+		printf("@Concluiu Sequencial\n");
 	
 		// %%%%%%%%%%%%%%%%%%%%%%%% Operações de Multiplicação Sequencial (em bloco) %%%%%%%%%%%%%%%%%%%%%%%%
 		mmultbloco = (mymatriz **) malloc (sizeof(mymatriz *));
@@ -143,9 +143,11 @@ int main(int argc, char *argv[]) {
 			seqBlocoTot += seqBlocosTempos[i];
 		}
 		seqBlocoMed = seqBlocoTot/10;
+		printf("@Concluiu Bloco\n");
 
 
 		// %%%%%%%%%%%%%%%%%%%%%%%% INI - PARALELO - multiplicar_t1 de Matrizes - MULTIPLICACAO %%%%%%%%%%%%%%%%%%%%%%%%		
+		printf("@Concluiu Paralelo\n");
 		int a[mat_a.lin][mat_a.col];
 		int b[mat_b.lin][mat_b.col];
 		int c[mat_a.lin][mat_b.col]; 
@@ -204,11 +206,10 @@ int main(int argc, char *argv[]) {
 				MPI_Recv(&c[offset][0], rows*NCB, MPI_INT, source, mtype, MPI_COMM_WORLD, &status);
 				
 				printf("## MESTRE - PROCESSANDO RETORNO DO ESCRAVO - 2 (%d)\n", source);
-				for (int j=offset; j<(offset + rows); j++)
-				{
-					printf("\n"); 
+				for (int j=offset; j<(offset + rows); j++){
+					//printf("\n"); 
 					for (int k=0; k<NCB; k++) {
-						printf("%d   ", c[j][k]);
+						//printf("%d   ", c[j][k]);
 						mmultPara[0]->matriz[j][k] = mmultPara[0]->matriz[j][k] + c[j][k];
 					}
 				}
