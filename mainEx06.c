@@ -246,9 +246,9 @@ int main(int argc, char *argv[]) {
 		printf("\n##Tempo Medio 10 Multiplicações Sequencial..............[%f]\n", seqMed);
 		printf("##Tempo Medio 10 Multiplicações Sequencial Bloco........[%f]\n", seqBlocoMed);
 		printf("##Tempo Medio 10 Multiplicações Paralelo................[%f]\n", paraMed);
-	/*	printf("##Tempo Medio 10 Multiplicações Paralelo Bloco..........[%f]\n\n", paraBlocoMed);	
+		//printf("##Tempo Medio 10 Multiplicações Paralelo Bloco..........[%f]\n\n", paraBlocoMed);	
 		printf("##SpeedUp Multiplicacao Sequencial / Paralela ..........[%f]\n", seqMed / paraMed);
-		printf("##SpeedUp Multiplicacao Bloco Sequencial / Paralela.....[%f]\n\n", seqBlocoMed / paraBlocoMed);
+	/*	printf("##SpeedUp Multiplicacao Bloco Sequencial / Paralela.....[%f]\n\n", seqBlocoMed / paraBlocoMed);
 
 		// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
 
