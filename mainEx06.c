@@ -18,24 +18,21 @@ int main(int argc, char *argv[]) {
 
 	// DECLARAÇÃO de VARIÁVEIS
 	mymatriz mat_a, mat_b;
-	mymatriz **mmult, **mmultbloco, **mmultPara /*,   **mmultblocoPara, */;
-	//mymatriz *mmultPara;
+	mymatriz **mmult, **mmultbloco, **mmultPara ;
 	char filename[100];
-	FILE *fmat /***/;
+	FILE *fmat;
 	int *vet_line = NULL;
 	int nr_line, N, M, La, Lb, nro_submatrizes = 2;
-	double seqTempos[10], seqBlocosTempos[10], paraTempos[10] /*, , paraBlocosTempos[10]*/;	
-	double seqTot = 0, seqBlocoTot = 0, seqMed = 0, seqBlocoMed  = 0, start_time = 0, end_time = 0, paraTot = 0, paraMed = 0  /*  paraBlocoTot = 0*/;
+	double seqTempos[10], seqBlocosTempos[10], paraTempos[10];	
+	double seqTot = 0, seqBlocoTot = 0, seqMed = 0, seqBlocoMed  = 0, start_time = 0, end_time = 0, paraTot = 0, paraMed = 0;
 	matriz_bloco_t **Vsubmat_a = NULL, **Vsubmat_b = NULL, **Vsubmat_c = NULL;
 
 	int	numtasks,              /* number of tasks in partition */
-	//taskid,                /* a task identifier */
 	numworkers,            /* number of worker tasks */
 	source,                /* task id of message source */
 	dest,                  /* task id of message destination */
 	mtype,                 /* message type */
 	rows,                  /* rows of matrix A sent to each worker */
-	//cols,                  /* cols of matrix B sent to each worker */
 	averow, extra, offset, /* used to determine rows sent to each worker */
 	i, j, k, /*rc,*/           /* misc */
 	NRA, NCA, NCB;
@@ -239,30 +236,23 @@ int main(int argc, char *argv[]) {
 		printf("[Companrando -> Sequencial mult[0] vs Paralelo mmultPara[0] : ");		
 		mcomparar (mmult[0], mmultPara[0]);
 
-	/*
-		printf("[Companrando -> Sequencial mult[0] vs Paralelo Bloco multblocoPara[0]] : ");
-		mcomparar (mmult[0],mmultblocoPara[0]);
-	*/
 		printf("\n##Tempo Medio 10 Multiplicações Sequencial..............[%f]\n", seqMed);
 		printf("##Tempo Medio 10 Multiplicações Sequencial Bloco........[%f]\n", seqBlocoMed);
 		printf("##Tempo Medio 10 Multiplicações Paralelo................[%f]\n", paraMed);
-		//printf("##Tempo Medio 10 Multiplicações Paralelo Bloco..........[%f]\n\n", paraBlocoMed);	
+
 		printf("##SpeedUp Multiplicacao Sequencial / Paralela ..........[%f]\n", seqMed / paraMed);
-	/*	printf("##SpeedUp Multiplicacao Bloco Sequencial / Paralela.....[%f]\n\n", seqBlocoMed / paraBlocoMed);
 
 		// %%%%%%%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%%%%%%%
 
-		*/
+
 		// %%%%%%%%%%%%%%%%%%%%%%%% LIBERACAO MEMORIA %%%%%%%%%%%%%%%%%%%%%%%%
 		mliberar(mmult[0]);
 		mliberar(mmultbloco[0]);
 		mliberar(mmultPara[0]);
-		//mliberar(mmultblocoPara[0]);
 
 		free(mmult[0]);
 		free(mmultbloco[0]);
 		free(mmultPara[0]);
-		//free(mmultblocoPara[0]);
 
 		mliberar(&mat_a);
 		mliberar(&mat_b);
@@ -270,7 +260,6 @@ int main(int argc, char *argv[]) {
 		free(mmult);
 		free(mmultbloco);
 		free(mmultPara);
-		//free(mmultblocoPara);
 	} 
 	else { // Rank <> 0
 		printf("## ESCRAVO (%d) - ATIVO\n", rank);
