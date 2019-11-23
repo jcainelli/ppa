@@ -1,0 +1,9 @@
+*.map
+*.o
+
+.result
+
+mainEx01
+mainEx02
+mainEx03
+mainEx04
