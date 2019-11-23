@@ -1,0 +1,70 @@
+###################################################
+### COMPILANDO FONTES                           ###
+###################################################
+
+aluno11@ppa-1 ~/Testes/ex06/Exe06-MPI_18112019 $ make
+mpicc -Wall -O3  -c matrizv3.c
+mpicc -Wall -O3  -c toolsv3.c
+mpicc -Wall -O3  -c matriz-operacoesv3.c
+mpicc -Wall -O3  -c matriz-operacoes-MPI.c
+mpicc -Wall -O3  matriz-operacoes-MPI.o matriz-operacoesv3.o matrizv3.o toolsv3.o mainEx06.c -o mainEx06
+mpicc -Wall -O3  matrizv3.o toolsv3.o gera_matrizv3.c -o gmat
+
+
+####### Exemplo de Geração de Matriz #######
+./gmat 100 100
+
+
+####### Exemplo de Execução #######
+mpirun -np 8 ./mainEx06 100x100-mat.map 100x100-mat.map
+
+
+###################################################################################
+###         COMPARANDO TEMPOS NAS MULTIPLICACAO DE MATRIZES                     ###
+###################################################################################
+
+
+ PASSO 1) GERA ARQUIVOS DE MATRIZES
+		aluno11@ppa-1 ~/Testes/ex06/Exe06-MPI_18112019 $ ./gmat 100 100
+						**** PRINT mat_c NxM(100,100) ****
+		##### Arquivo 100x100-mat.map: VERIFICADO! #####
+		
+PASSO 2) MULTIPLICA MATRIZES MPI		
+
+		aluno11@ppa-1 ~/Testes/ex06/Exe06-MPI_18112019 $ mpirun -np 8 ./mainEx06 100x100-mat.map 100x100-mat.map
+		--------------------------------------------------------------------------
+		[[43199,1],2]: A high-performance Open MPI point-to-point messaging module
+		was unable to find any relevant network interfaces:
+
+		Module: OpenFabrics (openib)
+		  Host: ppa-1
+
+		Another transport will be used instead, although this may result in
+		lower performance.
+
+		NOTE: You can disable this warning by setting the MCA parameter
+		btl_base_warn_component_unused to 0.
+		--------------------------------------------------------------------------
+		[ppa-1:23011] 7 more processes have sent help message help-mpi-btl-base.txt / btl:no-nics
+		[ppa-1:23011] Set MCA parameter "orte_base_help_aggregate" to 0 to see all help / error messages
+
+
+		****** Resultados ******
+
+		COMPARAR MATRIZ_SeqC c/ MATRIZ_SeqBlC
+		VERIFICADO: Matrizes idênticas
+
+		COMPARAR MATRIZ_SeqC c/ MATRIZ_MPIC
+		VERIFICADO: Matrizes idênticas
+
+		 COMPARAR MATRIZ_SeqC c/ MATRIZ_MPIBlC
+		VERIFICADO: Matrizes idênticas
+
+		TEMPO_MEDIO MATRIZ_SeqC : 0.049116
+		TEMPO_MEDIO MATRIZ_SeqBlC: 0.125313
+		TEMPO_MEDIO MATRIZ_MPIC: 0.000082
+		TEMPO_MEDIO MATRIZ_MPIBlC: 0.000929
+
+		SPEEDUP (MATRIZ_C): 602.014904
+		SPEEDUP (MATRIZ_BLC): 134.880646
+		

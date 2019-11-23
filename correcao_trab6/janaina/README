@@ -1,0 +1,24 @@
+###################################################
+### Disciplina de Programação Paralela Avançada ###
+###################################################
+Revisão: outubro/2019
+Linguagem: C
+Versão: v3 (tools, matriz, matriz-operacoes)
+Executáveis: mainEx06 e gmat
+
+mainEx06.exe: Programa principal de teste de multiplicacao MPI
+gmat.exe: gerador de matrizes NxM em arquivo
+
+ARQUIVOS:
+ * README-res: resultados da execucao
+                mainEx06 ==> mpirun -np <numeroprocessos> ./mainEx06 <arquivoa> <arquivob>
+ * toolsv3.(c/h): biblioteca de leitura/escrita de matrizes em arquivos
+ * matrizv3.h: headers das funcoes de gerencia de matrizes
+ * matrizv3.c: biblioteca de manipulacao de matrizes contendo as funcoes: malocar, mgerar, mimprimir, mzerar, mliberar e mcomparar
+ * matriz-operacoesv3.h: headers das funções de operações de matrizes: somar, particionar e multiplicar (simples e em bloco)
+ * matriz-operacoesv3.c: biblioteca de manipulacao de matrizes contendo as funcoes: somar, particionar e multiplicar (simples e em bloco)
+ * matriz-operacoes_MPI.h: headers das funções de operações de multiplicacao de matrizes MPI
+ * matriz-operacoes_MPI.c: biblioteca das funções de operações de multiplicacao de matrizes MPI
+ * gera_matrizv3.c: fonte do programa de geração de matrizes em arquivo
+ * mainEx06.c: fonte do programa de teste de multiplicacao de matrizes utilizando MPI
+ * mp: arquivo contendo as máquinas onde serão distribuídos os processos 

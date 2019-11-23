@@ -1,0 +1,11 @@
+README-res: resultados da execucao
+                mainEx05 ==> ./mainEx05 <arquivoa> <arquivob> <num threads>
+ * toolsv3.(c/h): biblioteca de leitura/escrita de matrizes em arquivos
+ * matrizv3.h: headers das funcoes de gerencia de matrizes
+ * matrizv3.c: biblioteca de manipulacao de matrizes contendo as funcoes: malocar, mgerar, mimprimir, mzerar, mliberar e mcomparar
+ * matriz-operacoesv3.h: headers das funções de operações de matrizes: somar, particionar e multiplicar (simples e em bloco)
+ * matriz-operacoesv3.c: biblioteca de manipulacao de matrizes contendo as funcoes: somar, particionar e multiplicar (simples e em bloco)
+ * matriz-operacoes_omp.h: headers das funções de operações de multiplicacao de matrizes OPENMP
+ * matriz-operacoes_omp.c: biblioteca das funções de operações de multiplicacao de matrizes OPENMP
+ * gera_matrizv3.c: fonte do programa de geração de matrizes em arquivo
+ * mainEx04.c: fonte do programa de teste de multiplicacao de matrizes utilizando OPENMP
